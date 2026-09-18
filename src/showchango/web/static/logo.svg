@@ -20,20 +20,27 @@
   <rect x="412" y="66" width="12" height="446" fill="#8C0D2D"/>
   <rect x="402" y="66" width="8" height="446" fill="#C81F43"/>
 
-  <circle cx="100" cy="205" r="66" fill="#C27330"/>
-  <circle cx="104" cy="210" r="34" fill="#8E4F1A"/>
-  <circle cx="412" cy="205" r="66" fill="#C27330"/>
-  <circle cx="408" cy="210" r="34" fill="#8E4F1A"/>
+  <circle cx="103" cy="295" r="62" fill="#C27330"/>
+  <circle cx="100" cy="300" r="32" fill="#8E4F1A"/>
+  <circle cx="409" cy="295" r="62" fill="#C27330"/>
+  <circle cx="412" cy="300" r="32" fill="#8E4F1A"/>
 
-  <ellipse cx="256" cy="318" rx="148" ry="152" fill="#C27330"/>
+  <ellipse cx="256" cy="320" rx="148" ry="150" fill="#C27330"/>
 
-  <ellipse cx="256" cy="378" rx="82" ry="50" fill="#FAEBCD" stroke="#E0C79B" stroke-width="3"/>
+  <path d="M256 215
+    C 205 222 168 268 168 328
+    C 168 410 206 448 256 448
+    C 306 448 344 410 344 328
+    C 344 268 307 222 256 215 Z"
+    fill="#E8A966" stroke="#B0622A" stroke-width="4"/>
 
-  <circle cx="222" cy="292" r="8" fill="#171719"/>
-  <circle cx="290" cy="292" r="8" fill="#171719"/>
-  <circle cx="241" cy="372" r="5" fill="#171719"/>
-  <circle cx="271" cy="372" r="5" fill="#171719"/>
-  <path d="M241 400 Q256 410 271 400" fill="none" stroke="#171719" stroke-width="5" stroke-linecap="round"/>
+  <ellipse cx="256" cy="392" rx="70" ry="46" fill="#FAEBCD" stroke="#E0C79B" stroke-width="3"/>
+
+  <circle cx="216" cy="296" r="8" fill="#171719"/>
+  <circle cx="296" cy="296" r="8" fill="#171719"/>
+  <circle cx="242" cy="388" r="5" fill="#171719"/>
+  <circle cx="270" cy="388" r="5" fill="#171719"/>
+  <path d="M243 414 Q256 424 269 414" fill="none" stroke="#171719" stroke-width="5" stroke-linecap="round"/>
 
   <path d="M206 176 V104 Q206 96 214 96 H298 Q306 96 306 104 V176 Z"
     fill="#141416" stroke="#E6E6EA" stroke-width="3"/>
