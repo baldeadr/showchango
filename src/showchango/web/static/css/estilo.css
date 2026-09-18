@@ -34,6 +34,36 @@ header h1 a {
   text-decoration: none;
 }
 
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.marca img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 6px;
+}
+
+.marca-nombre {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.marca-nombre strong {
+  font-size: 1.4rem;
+  color: var(--acento);
+}
+
+.marca-nombre small {
+  color: #999;
+  font-size: 0.8rem;
+}
+
 header p {
   margin: 0.25rem 0 0;
   color: #999;

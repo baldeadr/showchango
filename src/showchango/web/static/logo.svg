@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" shape-rendering="geometricPrecision">
+  <title>Show Chango</title>
+  <desc>Cara de chango de circo con sombrero de copa, enmarcada por cortinas rojas, bajo un spotlight.</desc>
+
+  <rect width="512" height="512" fill="#0B0B0C"/>
+  <path d="M256 -40 L28 512 L484 512 Z" fill="#5B8CFF" opacity="0.10"/>
+
+  <path d="M0 0 H512 V66
+    Q480 84 448 66 Q416 84 384 66 Q352 84 320 66 Q288 84 256 66 Q224 84 192 66 Q160 84 128 66 Q96 84 64 66 Q32 84 0 66 Z"
+    fill="#B0123A"/>
+  <path d="M0 66 H106 V512 H0 Z" fill="#B0123A"/>
+  <path d="M512 66 H406 V512 H512 Z" fill="#B0123A"/>
+
+  <circle cx="108" cy="222" r="58" fill="#C58A55" stroke="#8A4B28" stroke-width="6"/>
+  <circle cx="404" cy="222" r="58" fill="#C58A55" stroke="#8A4B28" stroke-width="6"/>
+  <circle cx="256" cy="310" r="150" fill="#C58A55" stroke="#8A4B28" stroke-width="6"/>
+
+  <ellipse cx="256" cy="365" rx="78" ry="56" fill="#F5E3C5" stroke="#C9A877" stroke-width="4"/>
+
+  <circle cx="210" cy="268" r="9" fill="#141416"/>
+  <circle cx="302" cy="268" r="9" fill="#141416"/>
+  <circle cx="243" cy="360" r="4.5" fill="#141416"/>
+  <circle cx="269" cy="360" r="4.5" fill="#141416"/>
+  <path d="M238 392 Q256 404 274 392" fill="none" stroke="#141416" stroke-width="5" stroke-linecap="round"/>
+
+  <path d="M206 176 V104 Q206 96 214 96 H298 Q306 96 306 104 V176 Z"
+    fill="#0E0E10" stroke="#E8E8EA" stroke-width="3"/>
+  <rect x="206" y="148" width="100" height="28" fill="#B0123A"/>
+  <ellipse cx="256" cy="188" rx="100" ry="12" fill="#0E0E10" stroke="#E8E8EA" stroke-width="3"/>
+</svg>

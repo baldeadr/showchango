@@ -4,13 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Show Chango{% endblock %}</title>
+  <link rel="icon" href="{{ url_for('static', path='/logo.svg') }}" type="image/svg+xml">
   <link rel="stylesheet" href="{{ url_for('static', path='/css/estilo.css') }}">
   <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshEEFC8ck/INrBWCQe7v0DnN3GN7PAIZl+oy8YRKdXvN/o4bSW8/tE" crossorigin="anonymous"></script>
 </head>
 <body>
   <header>
-    <h1><a href="/">Show Chango</a></h1>
-    <p>El orquestador de tus setlists</p>
+    <a class="marca" href="/">
+      <img src="{{ url_for('static', path='/logo.svg') }}" alt="Logo de Show Chango">
+      <span class="marca-nombre">
+        <strong>Show Chango</strong>
+        <small>El orquestador de tus setlists</small>
+      </span>
+    </a>
   </header>
   <main>
     {% block content %}{% endblock %}

@@ -19,6 +19,17 @@ def test_home():
     assert "Show Chango" in respuesta.text
 
 
+def test_logo_svg():
+    respuesta = client().get("/static/logo.svg")
+    assert respuesta.status_code == 200
+    assert respuesta.headers["content-type"] == "image/svg+xml"
+    assert "Show Chango" in respuesta.text
+
+    home = client().get("/")
+    assert "/static/logo.svg" in home.text
+    assert "alt=\"Logo de Show Chango\"" in home.text
+
+
 def test_crear_y_ver_set():
     c = client()
     respuesta = c.post(
