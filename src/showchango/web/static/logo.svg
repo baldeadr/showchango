@@ -17,10 +17,10 @@
   <polygon points="256,28 126,210 386,210" fill="#6E86E6" opacity="0.85"/>
   <polygon points="256,32 224,132 288,132" fill="#CFE9FF" opacity="0.9"/>
 
-  <ellipse cx="60" cy="296" rx="46" ry="62" fill="#CD833A"/>
-  <ellipse cx="68" cy="298" rx="36" ry="52" fill="#A35E25"/>
-  <ellipse cx="452" cy="296" rx="46" ry="62" fill="#CD833A"/>
-  <ellipse cx="444" cy="298" rx="36" ry="52" fill="#A35E25"/>
+  <ellipse cx="78" cy="282" rx="72" ry="64" fill="#CD833A" transform="rotate(14 78 282)"/>
+  <ellipse cx="86" cy="284" rx="58" ry="54" fill="#A35E25" transform="rotate(14 86 284)"/>
+  <ellipse cx="434" cy="282" rx="72" ry="64" fill="#CD833A" transform="rotate(-14 434 282)"/>
+  <ellipse cx="426" cy="284" rx="58" ry="54" fill="#A35E25" transform="rotate(-14 426 284)"/>
 
   <ellipse cx="256" cy="330" rx="152" ry="152" fill="#CD833A"/>
 
