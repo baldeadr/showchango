@@ -125,3 +125,110 @@ button:hover, .button:hover {
 nav {
   margin-bottom: 1rem;
 }
+
+section {
+  margin-bottom: 1.5rem;
+}
+
+.agregar-pista,
+.importar-csv,
+.importar-json,
+.subir-audio,
+.set-vacio,
+.acciones,
+.continuar,
+.nuevo-set {
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.grid-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem 1rem;
+}
+
+.grid-form label {
+  margin-bottom: 0;
+  font-size: 0.875rem;
+}
+
+form input[type="file"],
+form select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  color: var(--texto);
+  border-radius: 4px;
+}
+
+form input[type="file"] {
+  padding: 0.35rem;
+}
+
+button.small {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+button.danger {
+  background: #c0392b;
+}
+
+button.danger:hover {
+  background: #a93226;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  min-width: 900px;
+}
+
+th, td {
+  padding: 0.4rem;
+  text-align: left;
+  border-bottom: 1px solid var(--borde);
+  vertical-align: top;
+}
+
+th {
+  color: #999;
+  font-weight: 600;
+}
+
+table input[type="text"],
+table select {
+  padding: 0.35rem;
+  font-size: 0.8rem;
+  background: var(--fondo);
+}
+
+td.actions {
+  white-space: nowrap;
+}
+
+.error {
+  background: #3b1a1a;
+  border: 1px solid #c0392b;
+  color: #ff9f9f;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.subir-audio #analisis-result {
+  margin-top: 1rem;
+}

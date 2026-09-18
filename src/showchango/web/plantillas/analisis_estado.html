@@ -1,0 +1,12 @@
+{% if status == "done" %}
+<script>window.location.href = "/set";</script>
+{% elif status == "error" %}
+<div class="error">
+  <p>Error al analizar el audio: {{ message }}</p>
+  <a href="/set">Volver al set</a>
+</div>
+{% else %}
+<div hx-get="/pista/analisis/{{ job_id }}/estado" hx-trigger="every 2s" hx-swap="outerHTML">
+  <p>Analizando audio…</p>
+</div>
+{% endif %}

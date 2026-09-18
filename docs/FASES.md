@@ -28,11 +28,11 @@ Criterio de salida: armar el setlist de Apex Ultra del 25-sep 100% en Show Chang
 
 ### M1 — Importar (y guardar con JSON desde el día 1)
 
-- [ ] Formulario manual de pista (título, artista, BPM, energía, bailabilidad, duración, etc.).
-- [ ] Importar CSV/Excel (caso real de los setlists en Excel).
-- [ ] Subir audio: análisis efímero con librosa, caché por hash, HTMX polling.
-- [ ] Editar cualquier atributo a mano.
-- [ ] **Exportar e importar JSON** como mecanismo de persistencia desde el inicio.
+- [x] Formulario manual de pista (título, artista, BPM, energía, bailabilidad, duración, etc.).
+- [x] Importar CSV/Excel (caso real de los setlists en Excel).
+- [x] Subir audio: análisis efímero con librosa, caché por hash, HTMX polling.
+- [x] Editar cualquier atributo a mano.
+- [x] **Exportar e importar JSON** como mecanismo de persistencia desde el inicio.
 
 ### M2 — Curva + drag & drop
 

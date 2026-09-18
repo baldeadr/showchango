@@ -8,11 +8,128 @@
 </nav>
 
 <h2>{{ proyecto.show.nombre or "Set sin nombre" }}</h2>
-<p class="meta">Artista: {{ proyecto.show.artista or "Sin artista" }}</p>
+<p class="meta">Artista: {{ proyecto.show.artista or "Sin artista" }} · {{ proyecto.orden|length }} pista(s)</p>
 
+{% if proyecto.orden %}
+<section class="tabla-pistas">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Título</th>
+          <th>Artista</th>
+          <th>BPM</th>
+          <th>Energía</th>
+          <th>Bail.</th>
+          <th>Dur. (s)</th>
+          <th>Loud.</th>
+          <th>Val.</th>
+          <th>Voz</th>
+          <th>Género</th>
+          <th>Tonalidad</th>
+          <th>Notas</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pista_id in proyecto.orden %}
+        {% set pista = proyecto.pistas | selectattr('id', 'equalto', pista_id) | first %}
+        <tr>
+          <form method="post" action="/pista/{{ pista.id }}/actualizar">
+            <td>{{ loop.index }}</td>
+            <td><input type="text" name="titulo" value="{{ pista.titulo }}" required></td>
+            <td><input type="text" name="artista" value="{{ pista.artista }}"></td>
+            <td><input type="text" name="bpm" value="{{ pista.bpm or '' }}"></td>
+            <td><input type="text" name="energia" value="{{ pista.energia or '' }}"></td>
+            <td><input type="text" name="bailabilidad" value="{{ pista.bailabilidad or '' }}"></td>
+            <td><input type="text" name="duracion_s" value="{{ pista.duracion_s or '' }}"></td>
+            <td><input type="text" name="loudness_db" value="{{ pista.loudness_db or '' }}"></td>
+            <td><input type="text" name="valencia" value="{{ pista.valencia or '' }}"></td>
+            <td>
+              <select name="voz">
+                <option value="" {% if not pista.voz %}selected{% endif %}>—</option>
+                <option value="vocal" {% if pista.voz == 'vocal' %}selected{% endif %}>Vocal</option>
+                <option value="instrumental" {% if pista.voz == 'instrumental' %}selected{% endif %}>Instrumental</option>
+                <option value="mixto" {% if pista.voz == 'mixto' %}selected{% endif %}>Mixto</option>
+              </select>
+            </td>
+            <td><input type="text" name="genero" value="{{ pista.genero or '' }}"></td>
+            <td><input type="text" name="tonalidad" value="{{ pista.tonalidad or '' }}"></td>
+            <td><input type="text" name="notas" value="{{ pista.notas }}"></td>
+            <td class="actions">
+              <button type="submit" class="small">Guardar</button>
+            </td>
+          </form>
+          <td class="actions">
+            <form method="post" action="/pista/{{ pista.id }}/eliminar" class="inline">
+              <button type="submit" class="small danger">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% else %}
 <section class="set-vacio">
   <p>Aún no hay pistas en este set.</p>
-  <p>En la siguiente fase podrás importar canciones manualmente, por CSV/Excel o subiendo audio.</p>
+  <p>Agrega canciones manualmente, importa un CSV/Excel, sube audio o importa un JSON.</p>
+</section>
+{% endif %}
+
+<section class="agregar-pista">
+  <h3>Agregar pista manual</h3>
+  <form method="post" action="/pista/nueva" class="grid-form">
+    <label>Título <input type="text" name="titulo" required></label>
+    <label>Artista <input type="text" name="artista"></label>
+    <label>BPM <input type="text" name="bpm"></label>
+    <label>Energía (0–1) <input type="text" name="energia"></label>
+    <label>Bailabilidad (0–1) <input type="text" name="bailabilidad"></label>
+    <label>Duración (s) <input type="text" name="duracion_s"></label>
+    <label>Loudness (dB) <input type="text" name="loudness_db"></label>
+    <label>Valencia (0–1) <input type="text" name="valencia"></label>
+    <label>Voz
+      <select name="voz">
+        <option value="">—</option>
+        <option value="vocal">Vocal</option>
+        <option value="instrumental">Instrumental</option>
+        <option value="mixto">Mixto</option>
+      </select>
+    </label>
+    <label>Género <input type="text" name="genero"></label>
+    <label>Tonalidad <input type="text" name="tonalidad"></label>
+    <label>Notas <input type="text" name="notas"></label>
+    <button type="submit">Agregar pista</button>
+  </form>
+</section>
+
+<section class="importar-csv">
+  <h3>Importar CSV / Excel</h3>
+  <p>Columnas reconocidas: Título, Artista, BPM, Energía, Bailabilidad, Duración, Loudness, Valencia, Voz, Género, Tonalidad, Notas.</p>
+  <form method="post" action="/set/importar-csv" enctype="multipart/form-data">
+    <input type="file" name="archivo" accept=".csv,.xlsx,.xls" required>
+    <button type="submit">Importar</button>
+  </form>
+</section>
+
+<section class="subir-audio">
+  <h3>Subir audio (análisis efímero)</h3>
+  <p>El archivo se analiza y se descarta. Formatos: MP3, WAV, FLAC, OGG, M4A. Máx. 50 MB.</p>
+  <form hx-post="/pista/subir-audio" hx-target="#analisis-result" hx-swap="innerHTML" enctype="multipart/form-data">
+    <input type="file" name="archivo" accept=".mp3,.wav,.flac,.ogg,.m4a,.aac,.wma" required>
+    <button type="submit">Analizar audio</button>
+  </form>
+  <div id="analisis-result"></div>
+</section>
+
+<section class="importar-json">
+  <h3>Importar JSON (reemplaza el set actual)</h3>
+  <form method="post" action="/set/importar" enctype="multipart/form-data">
+    <input type="file" name="archivo" accept="application/json,.json" required>
+    <button type="submit" class="secondary">Importar JSON</button>
+  </form>
 </section>
 
 <section class="acciones">

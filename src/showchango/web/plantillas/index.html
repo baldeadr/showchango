@@ -27,4 +27,16 @@
   <a class="button" href="/set">Continuar set</a>
 </section>
 {% endif %}
+
+<section class="importar-json">
+  <h3>Abrir set guardado (JSON)</h3>
+  <p>Reemplaza el set en curso con un archivo exportado previamente.</p>
+  <form method="post" action="/set/importar" enctype="multipart/form-data">
+    <label>
+      Archivo JSON de Show Chango
+      <input type="file" name="archivo" accept="application/json,.json" required>
+    </label>
+    <button type="submit" class="secondary">Importar JSON</button>
+  </form>
+</section>
 {% endblock %}
