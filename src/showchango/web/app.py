@@ -10,13 +10,14 @@ import tempfile
 import unicodedata
 from pathlib import Path
 
-from fastapi import BackgroundTasks, FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi import BackgroundTasks, FastAPI, File, Form, HTTPException, Query, Request, UploadFile
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from showchango.analytics.librosa_analyzer import LibrosaAnalyzer
 from showchango.core.curva import datos_para_chartjs
+from showchango.core.diagnostico import diagnosticar, listar_plantillas
 from showchango.core.esquema import (
     OrdenPayload,
     Pista,
@@ -222,7 +223,15 @@ def crear_app() -> FastAPI:
             return RedirectResponse("/", status_code=303)
         return proyecto
 
-    def _render_set(request: Request, proyecto: Proyecto, error: str | None = None):
+    def _render_set(
+        request: Request,
+        proyecto: Proyecto,
+        error: str | None = None,
+        plantilla_id: str = "climax_70",
+    ):
+        plantillas_validas = {"climax_70", "construccion_dj", "picos_rock"}
+        plantilla_id = plantilla_id if plantilla_id in plantillas_validas else "climax_70"
+        diagnostico = diagnosticar(proyecto, plantilla_id) if proyecto.orden else None
         return templates.TemplateResponse(
             request,
             "set.html",
@@ -232,6 +241,9 @@ def crear_app() -> FastAPI:
                     datos_para_chartjs(proyecto), ensure_ascii=False
                 ),
                 "error": error,
+                "diagnostico": diagnostico,
+                "plantilla_id": plantilla_id,
+                "plantillas": listar_plantillas(),
             },
         )
 
@@ -284,21 +296,12 @@ def crear_app() -> FastAPI:
         return _respuesta_con_sesion(sid, "/set")
 
     @app.get("/set", response_class=HTMLResponse)
-    def ver_set(request: Request):
+    def ver_set(request: Request, plantilla: str = Query("climax_70")):
         sid = _sid(request)
         resultado = _proyecto_o_redir(sid)
         if isinstance(resultado, RedirectResponse):
             return resultado
-        return templates.TemplateResponse(
-            request,
-            "set.html",
-            {
-                "proyecto": resultado,
-                "curva_json": json.dumps(
-                    datos_para_chartjs(resultado), ensure_ascii=False
-                ),
-            },
-        )
+        return _render_set(request, resultado, plantilla_id=plantilla)
 
     @app.get("/set/curva-json")
     def curva_json(request: Request):

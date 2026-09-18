@@ -42,10 +42,10 @@ Criterio de salida: armar el setlist de Apex Ultra del 25-sep 100% en Show Chang
 
 ### M3 — Diagnóstico
 
-- [ ] Plantillas de arco objetivo (al menos: clímax al 70%, construcción DJ, picos rock).
-- [ ] Detección de valles y picos.
-- [ ] Alerta de bloques repetidos (≥3 pistas con BPM/energía similares).
-- [ ] Alerta de posiciones desperdiciadas.
+- [x] Plantillas de arco objetivo (al menos: clímax al 70%, construcción DJ, picos rock).
+- [x] Detección de valles y picos.
+- [x] Alerta de bloques repetidos (≥3 pistas con BPM/energía similares).
+- [x] Alerta de posiciones desperdiciadas.
 
 ### M4 — Export completo + round-trip
 

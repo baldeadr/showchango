@@ -2,6 +2,22 @@
   <title>Show Chango</title>
   <desc>Chango de circo con sombrero de copa, cortinas rojas y luz de escenario.</desc>
 
+  <defs>
+    <clipPath id="craneo">
+      <ellipse cx="256" cy="330" rx="152" ry="152"/>
+    </clipPath>
+    <clipPath id="rostro">
+      <ellipse cx="256" cy="300" rx="130" ry="64"/>
+      <ellipse cx="255" cy="414" rx="74" ry="66"/>
+    </clipPath>
+    <clipPath id="oreja-izq">
+      <ellipse cx="78" cy="282" rx="72" ry="64" transform="rotate(14 78 282)"/>
+    </clipPath>
+    <clipPath id="oreja-der">
+      <ellipse cx="434" cy="282" rx="72" ry="64" transform="rotate(-14 434 282)"/>
+    </clipPath>
+  </defs>
+
   <rect width="512" height="512" fill="#090A0C"/>
 
   <path d="M0 0 H512 V56
@@ -24,8 +40,24 @@
 
   <ellipse cx="256" cy="330" rx="152" ry="152" fill="#CD833A"/>
 
+  <g clip-path="url(#oreja-izq)" fill="#FFFFFF">
+    <ellipse cx="70" cy="252" rx="25" ry="15" transform="rotate(14 70 252)" opacity="0.28"/>
+  </g>
+  <g clip-path="url(#oreja-der)" fill="#FFFFFF">
+    <ellipse cx="442" cy="252" rx="25" ry="15" transform="rotate(-14 442 252)" opacity="0.28"/>
+  </g>
+  <g clip-path="url(#craneo)" fill="#FFFFFF">
+    <ellipse cx="188" cy="244" rx="80" ry="50" transform="rotate(-26 188 244)" opacity="0.16"/>
+    <ellipse cx="166" cy="214" rx="40" ry="22" transform="rotate(-26 166 214)" opacity="0.22"/>
+  </g>
+
   <ellipse cx="256" cy="300" rx="130" ry="64" fill="#F8F1D7"/>
   <ellipse cx="255" cy="414" rx="74" ry="66" fill="#F8F1D7"/>
+
+  <g clip-path="url(#rostro)" fill="#FFFFFF">
+    <ellipse cx="256" cy="268" rx="56" ry="13" opacity="0.16"/>
+    <ellipse cx="255" cy="374" rx="44" ry="16" opacity="0.26"/>
+  </g>
 
   <circle cx="198" cy="302" r="12" fill="#A35E25"/>
   <circle cx="313" cy="302" r="12" fill="#A35E25"/>
@@ -33,9 +65,17 @@
   <circle cx="273" cy="356" r="8" fill="#A35E25"/>
   <ellipse cx="255" cy="415" rx="26" ry="6" fill="#A35E25"/>
 
+  <circle cx="194" cy="297" r="3.5" fill="#FFFFFF" opacity="0.85"/>
+  <circle cx="309" cy="297" r="3.5" fill="#FFFFFF" opacity="0.85"/>
+
   <path d="M204 78 Q204 70 212 70 H300 Q308 70 308 78 L342 205 H170 Z"
     fill="#0A0A0C" stroke="#6E86E6" stroke-width="4"/>
   <path d="M204 78 Q204 70 212 70 H300 Q308 70 308 78 V96 H204 Z" fill="#30353B"/>
   <path d="M196 168 L316 168 L330 201 L182 201 Z" fill="#B21234"/>
   <ellipse cx="256" cy="213" rx="116" ry="16" fill="#0A0A0C" stroke="#8FB4F0" stroke-width="4"/>
+
+  <rect x="221" y="88" width="17" height="74" rx="8.5" fill="#FFFFFF" opacity="0.20"/>
+  <ellipse cx="256" cy="205" rx="98" ry="6" fill="#FFFFFF" opacity="0.22"/>
+
+  <path d="M0 0 H512 V108 Q256 182 0 108 Z" fill="#FFFFFF" opacity="0.08"/>
 </svg>

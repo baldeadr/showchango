@@ -42,6 +42,34 @@
   </ul>
 </section>
 
+<section class="diagnostico">
+  <h3>Diagnóstico</h3>
+  <form method="get" action="/set" class="grid-form">
+    <label>
+      Arco objetivo
+      <select name="plantilla" onchange="this.form.submit()">
+        {% for p in plantillas %}
+        <option value="{{ p.id }}" {% if p.id == plantilla_id %}selected{% endif %}>{{ p.nombre }}</option>
+        {% endfor %}
+      </select>
+    </label>
+  </form>
+  <p class="hint">{{ (plantillas | selectattr('id', 'equalto', plantilla_id) | first).descripcion }}</p>
+
+  {% if diagnostico and diagnostico.alertas %}
+  <ul class="alertas">
+    {% for alerta in diagnostico.alertas %}
+    <li class="alerta alerta-{{ alerta.tipo }}">
+      <span class="alerta-tipo">{{ alerta.tipo.replace('_', ' ') }}</span>
+      {{ alerta.mensaje }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="ok">No se detectaron problemas con esta plantilla.</p>
+  {% endif %}
+</section>
+
 <section class="tabla-pistas">
   <h3>Editar atributos</h3>
   <div class="table-wrap">
