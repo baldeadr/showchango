@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import io
+import json
 import os
 import re
 import tempfile
@@ -15,7 +16,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from showchango.analytics.librosa_analyzer import LibrosaAnalyzer
+from showchango.core.curva import datos_para_chartjs
 from showchango.core.esquema import (
+    OrdenPayload,
     Pista,
     Proyecto,
     a_texto,
@@ -255,8 +258,35 @@ def crear_app() -> FastAPI:
         return templates.TemplateResponse(
             request,
             "set.html",
-            {"proyecto": resultado},
+            {
+                "proyecto": resultado,
+                "curva_json": json.dumps(
+                    datos_para_chartjs(resultado), ensure_ascii=False
+                ),
+            },
         )
+
+    @app.get("/set/curva-json")
+    def curva_json(request: Request):
+        sid = _sid(request)
+        resultado = _proyecto_o_redir(sid)
+        if isinstance(resultado, RedirectResponse):
+            return resultado
+        return datos_para_chartjs(resultado)
+
+    @app.post("/set/reordenar")
+    async def reordenar(request: Request, payload: OrdenPayload):
+        sid = _sid(request)
+        resultado = _proyecto_o_redir(sid)
+        if isinstance(resultado, RedirectResponse):
+            return resultado
+        ids_validos = {p.id for p in resultado.pistas}
+        orden = [pid for pid in payload.orden if pid in ids_validos]
+        if set(orden) != ids_validos or len(orden) != len(ids_validos):
+            raise HTTPException(status_code=400, detail="Orden inválido.")
+        resultado.orden = orden
+        sesiones.guardar_proyecto(sid, resultado)
+        return datos_para_chartjs(resultado)
 
     @app.post("/set/importar")
     async def importar_set(request: Request, archivo: UploadFile = _ARCHIVO_REQUERIDO):

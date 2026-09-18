@@ -4,7 +4,7 @@
 
 - **Nombre:** Show Chango — decisión del artista (2026-09-18).
 - **Tagline:** *El orquestador de tus setlists.*
-- **Estado:** Fase 1 — MVP en curso (M1 importar pistas ✔; M2–M4 pendientes).
+- **Estado:** Fase 1 — MVP en curso (M1 importar pistas ✔; M2 curva + drag & drop ✔; M3–M4 pendientes).
 - **Repo:** código, docs y bitácora viven aquí (`~/Projects/showchango`).
 - **Principio clave:** **nada se almacena** — ni audio ni sets. El set vive en sesión temporal; la persistencia real es el JSON que exportas.
 
@@ -95,7 +95,7 @@ Ver [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md) para el diagrama de capas, el
 Ver [`docs/FASES.md`](docs/FASES.md) para el plan completo con checkboxes.
 
 - **F0 — Cimiento (✔):** repo, docs, esquema v1, esqueleto FastAPI.
-- **F1 — MVP (en curso):** M1 importar pistas ✔; M2 curva + drag & drop; M3 diagnóstico; M4 export completo.
+- **F1 — MVP (en curso):** M1 importar pistas ✔; M2 curva + drag & drop ✔; M3 diagnóstico; M4 export completo.
 - **F2 — Producto público:** deploy, landing, Spotify metadata, decidir modelo de acceso.
 - **F3 — Inteligencia:** recomendador de orden + diagnóstico explicado + LLM sobre export.
 
@@ -144,7 +144,7 @@ Show Chango nació del universo `architecting-a-band` (caso real: setlist de Ape
 
 - [x] F0 completar y commit inicial.
 - [x] F1-M1: importar + análisis efímero + caché hash.
-- [ ] F1-M2: curva + drag & drop.
+- [x] F1-M2: curva + drag & drop.
 - [ ] F1-M3: diagnóstico (arcos, valles/picos, bloques).
 - [ ] F1-M4: export completo (CSV, Markdown, PNG/SVG, PDF).
 - [ ] Definir licencia del proyecto `[PENDIENTE]`.

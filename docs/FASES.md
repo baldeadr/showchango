@@ -36,9 +36,9 @@ Criterio de salida: armar el setlist de Apex Ultra del 25-sep 100% en Show Chang
 
 ### M2 — Curva + drag & drop
 
-- [ ] Renderizar lista de pistas con SortableJS.
-- [ ] Curva con Chart.js; recalcular en vivo al reordenar.
-- [ ] Persistir el orden en la sesión temporal.
+- [x] Renderizar lista de pistas con SortableJS.
+- [x] Curva con Chart.js; recalcular en vivo al reordenar.
+- [x] Persistir el orden en la sesión temporal.
 
 ### M3 — Diagnóstico
 

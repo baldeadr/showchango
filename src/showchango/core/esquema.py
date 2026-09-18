@@ -91,3 +91,7 @@ def de_texto(texto: str) -> Proyecto:
 
 def de_dict(datos: dict) -> Proyecto:
     return Proyecto.model_validate(datos)
+
+
+class OrdenPayload(BaseModel):
+    orden: list[str]

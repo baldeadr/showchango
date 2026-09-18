@@ -227,3 +227,35 @@ def test_subir_audio():
     assert respuesta.status_code == 200
     assert "Click" in respuesta.text or "click" in respuesta.text.lower()
 
+
+def test_curva_json():
+    c = client()
+    c.post("/set/nuevo", data={"nombre": "Set", "artista": "Test"})
+    c.post("/pista/nueva", data={"titulo": "A", "energia": "0.2", "duracion_s": "120"})
+    c.post("/pista/nueva", data={"titulo": "B", "energia": "0.8", "duracion_s": "180"})
+
+    respuesta = c.get("/set/curva-json")
+    assert respuesta.status_code == 200
+    datos = respuesta.json()
+    assert datos["etiquetas"] == ["A", "B"]
+    assert datos["energia"] == [0.2, 0.8]
+    assert datos["duracion_total_min"] == 5.0
+
+
+def test_reordenar_pistas():
+    c = client()
+    c.post("/set/nuevo", data={"nombre": "Set", "artista": "Test"})
+    c.post("/pista/nueva", data={"titulo": "A", "energia": "0.2", "duracion_s": "60"})
+    c.post("/pista/nueva", data={"titulo": "B", "energia": "0.9", "duracion_s": "60"})
+
+    # Obtener ids en orden original
+    curva = c.get("/set/curva-json").json()
+    ids = [p["id"] for p in curva["puntos"]]
+    ids_invertidos = list(reversed(ids))
+
+    respuesta = c.post("/set/reordenar", json={"orden": ids_invertidos})
+    assert respuesta.status_code == 200
+    datos = respuesta.json()
+    assert datos["etiquetas"] == ["B", "A"]
+    assert datos["energia"] == [0.9, 0.2]
+

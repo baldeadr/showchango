@@ -11,12 +11,37 @@
 <p class="meta">Artista: {{ proyecto.show.artista or "Sin artista" }} · {{ proyecto.orden|length }} pista(s)</p>
 
 {% if proyecto.orden %}
+<section class="curva">
+  <h3>Curva del show</h3>
+  <div class="chart-wrap">
+    <canvas id="curva-canvas" height="300"></canvas>
+  </div>
+</section>
+
+<section class="orden-pistas">
+  <h3>Orden del set (arrastra para reordenar)</h3>
+  <ul id="lista-pistas" class="sortable-list">
+    {% for pista_id in proyecto.orden %}
+    {% set pista = proyecto.pistas | selectattr('id', 'equalto', pista_id) | first %}
+    <li data-id="{{ pista.id }}">
+      <span class="handle" aria-label="Arrastrar">☰</span>
+      <span class="num">{{ loop.index }}</span>
+      <span class="titulo">{{ pista.titulo }}</span>
+      {% if pista.artista %}<span class="artista">— {{ pista.artista }}</span>{% endif %}
+      {% if pista.bpm %}<span class="badge">{{ pista.bpm }} BPM</span>{% endif %}
+      {% if pista.energia is not none %}<span class="badge">E {{ pista.energia }}</span>{% endif %}
+      {% if pista.duracion_s %}<span class="badge">{{ pista.duracion_s // 60 }}:{{ "%02d" | format(pista.duracion_s % 60) }}</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+
 <section class="tabla-pistas">
+  <h3>Editar atributos</h3>
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
-          <th>#</th>
           <th>Título</th>
           <th>Artista</th>
           <th>BPM</th>
@@ -33,11 +58,9 @@
         </tr>
       </thead>
       <tbody>
-        {% for pista_id in proyecto.orden %}
-        {% set pista = proyecto.pistas | selectattr('id', 'equalto', pista_id) | first %}
+        {% for pista in proyecto.pistas %}
         <tr>
           <form method="post" action="/pista/{{ pista.id }}/actualizar">
-            <td>{{ loop.index }}</td>
             <td><input type="text" name="titulo" value="{{ pista.titulo }}" required></td>
             <td><input type="text" name="artista" value="{{ pista.artista }}"></td>
             <td><input type="text" name="bpm" value="{{ pista.bpm or '' }}"></td>
@@ -138,4 +161,9 @@
     <button type="submit" class="secondary">Cerrar set</button>
   </form>
 </section>
+
+<script>
+  window.__CURVA_INICIAL__ = {{ curva_json | safe }};
+</script>
+<script src="{{ url_for('static', path='/js/set.js') }}"></script>
 {% endblock %}
