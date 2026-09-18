@@ -37,7 +37,7 @@ def test_crear_y_ver_set():
         data={"nombre": "Trve Café", "artista": "Apex Ultra"},
         follow_redirects=False,
     )
-    assert respuesta.status_code == 302
+    assert respuesta.status_code == 303
     assert respuesta.headers["location"] == "/set"
 
     respuesta = c.get("/set")
@@ -62,11 +62,11 @@ def test_cerrar_set():
     c = client()
     c.post("/set/nuevo", data={"nombre": "Cerrar", "artista": "Test"})
     respuesta = c.post("/set/cerrar", follow_redirects=False)
-    assert respuesta.status_code == 302
+    assert respuesta.status_code == 303
     assert respuesta.headers["location"] == "/"
 
     respuesta = c.get("/set", follow_redirects=False)
-    assert respuesta.status_code == 302
+    assert respuesta.status_code == 303
     assert respuesta.headers["location"] == "/"
 
 

@@ -189,16 +189,16 @@ def crear_app() -> FastAPI:
         return request.cookies.get(COOKIE_SESION)
 
     def _respuesta_con_sesion(sid: str, url: str) -> RedirectResponse:
-        respuesta = RedirectResponse(url, status_code=302)
+        respuesta = RedirectResponse(url, status_code=303)
         respuesta.set_cookie(COOKIE_SESION, sid, max_age=8 * 3600, httponly=True)
         return respuesta
 
     def _proyecto_o_redir(sid: str | None) -> Proyecto | RedirectResponse:
         if sid is None:
-            return RedirectResponse("/", status_code=302)
+            return RedirectResponse("/", status_code=303)
         proyecto = sesiones.obtener_proyecto(sid)
         if proyecto is None:
-            return RedirectResponse("/", status_code=302)
+            return RedirectResponse("/", status_code=303)
         return proyecto
 
     def _analizar_audio(
@@ -292,7 +292,7 @@ def crear_app() -> FastAPI:
     async def importar_set(request: Request, archivo: UploadFile = _ARCHIVO_REQUERIDO):
         sid = _sid(request)
         if sid is None:
-            return RedirectResponse("/", status_code=302)
+            return RedirectResponse("/", status_code=303)
         contenido = await archivo.read()
         try:
             texto = contenido.decode("utf-8")
@@ -322,7 +322,7 @@ def crear_app() -> FastAPI:
         sid = _sid(request)
         if sid:
             sesiones.limpiar_proyecto(sid)
-        respuesta = RedirectResponse("/", status_code=302)
+        respuesta = RedirectResponse("/", status_code=303)
         respuesta.delete_cookie(COOKIE_SESION)
         return respuesta
 
@@ -367,7 +367,7 @@ def crear_app() -> FastAPI:
         resultado.pistas.append(pista)
         resultado.orden.append(pista.id)
         sesiones.guardar_proyecto(sid, resultado)
-        return RedirectResponse("/set", status_code=302)
+        return RedirectResponse("/set", status_code=303)
 
     @app.post("/pista/{pista_id}/actualizar")
     def actualizar_pista(
@@ -406,7 +406,7 @@ def crear_app() -> FastAPI:
                 pista.notas = notas.strip()
                 break
         sesiones.guardar_proyecto(sid, resultado)
-        return RedirectResponse("/set", status_code=302)
+        return RedirectResponse("/set", status_code=303)
 
     @app.post("/pista/{pista_id}/eliminar")
     def eliminar_pista(request: Request, pista_id: str):
@@ -418,7 +418,7 @@ def crear_app() -> FastAPI:
         resultado.orden = [pid for pid in resultado.orden if pid != pista_id]
         resultado.transiciones = [t for t in resultado.transiciones if t.despues_de != pista_id]
         sesiones.guardar_proyecto(sid, resultado)
-        return RedirectResponse("/set", status_code=302)
+        return RedirectResponse("/set", status_code=303)
 
     @app.post("/set/importar-csv")
     async def importar_csv(request: Request, archivo: UploadFile = _ARCHIVO_REQUERIDO):
@@ -442,7 +442,7 @@ def crear_app() -> FastAPI:
                 resultado.pistas.append(pista)
                 resultado.orden.append(pista.id)
         sesiones.guardar_proyecto(sid, resultado)
-        return RedirectResponse("/set", status_code=302)
+        return RedirectResponse("/set", status_code=303)
 
     @app.post("/pista/subir-audio")
     async def subir_audio(
@@ -452,7 +452,7 @@ def crear_app() -> FastAPI:
     ):
         sid = _sid(request)
         if sid is None:
-            return RedirectResponse("/", status_code=302)
+            return RedirectResponse("/", status_code=303)
 
         filename = archivo.filename or "audio"
         extension = Path(filename).suffix.lower()
@@ -487,12 +487,12 @@ def crear_app() -> FastAPI:
             os.remove(tmp.name)
             proyecto = sesiones.obtener_proyecto(sid)
             if proyecto is None:
-                return RedirectResponse("/", status_code=302)
+                return RedirectResponse("/", status_code=303)
             pista = _crear_pista_desde_features(features, titulo)
             proyecto.pistas.append(pista)
             proyecto.orden.append(pista.id)
             sesiones.guardar_proyecto(sid, proyecto)
-            return RedirectResponse("/set", status_code=302)
+            return RedirectResponse("/set", status_code=303)
 
         job_id = nuevo_id()
         jobs[job_id] = {"status": "pending", "message": "", "sid": sid}
