@@ -1,53 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" shape-rendering="geometricPrecision">
   <title>Show Chango</title>
-  <desc>Cara de chango de circo con sombrero de copa, enmarcada por cortinas rojas, bajo un spotlight.</desc>
+  <desc>Chango de circo con sombrero de copa, cortinas rojas y luz de escenario.</desc>
 
   <rect width="512" height="512" fill="#0B0B0C"/>
-  <ellipse cx="256" cy="320" rx="190" ry="210" fill="#5B8CFF" opacity="0.07"/>
-  <path d="M256 -40 L30 512 L482 512 Z" fill="#5B8CFF" opacity="0.12"/>
+  <polygon points="256,-40 66,512 446,512" fill="#5B8CFF" opacity="0.25"/>
 
-  <path d="M0 0 H512 V66
-    Q480 86 448 66 Q416 86 384 66 Q352 86 320 66 Q288 86 256 66 Q224 86 192 66 Q160 86 128 66 Q96 86 64 66 Q32 86 0 66 Z"
-    fill="#B0123A"/>
+  <path d="M0 0 H512 V64
+    Q480 84 448 64 Q416 84 384 64 Q352 84 320 64
+    Q288 84 256 64 Q224 84 192 64 Q160 84 128 64
+    Q96 84 64 64 Q32 84 0 64 Z" fill="#B0123A"/>
+  <path d="M0 64 H100 V512 H0 Z" fill="#B0123A"/>
+  <path d="M512 64 H412 V512 H512 Z" fill="#B0123A"/>
 
-  <path d="M0 66 H112 V512 H0 Z" fill="#B0123A"/>
-  <rect x="40" y="66" width="10" height="446" fill="#8C0D2D"/>
-  <rect x="88" y="66" width="12" height="446" fill="#8C0D2D"/>
-  <rect x="102" y="66" width="8" height="446" fill="#C81F43"/>
+  <circle cx="91" cy="235" r="72" fill="#C48344"/>
+  <circle cx="421" cy="235" r="72" fill="#C48344"/>
+  <circle cx="256" cy="320" r="150" fill="#C48344"/>
 
-  <path d="M512 66 H400 V512 H512 Z" fill="#B0123A"/>
-  <rect x="462" y="66" width="10" height="446" fill="#8C0D2D"/>
-  <rect x="412" y="66" width="12" height="446" fill="#8C0D2D"/>
-  <rect x="402" y="66" width="8" height="446" fill="#C81F43"/>
+  <ellipse cx="256" cy="350" rx="92" ry="80" fill="#FFF3DB"/>
 
-  <circle cx="103" cy="295" r="62" fill="#C27330"/>
-  <circle cx="100" cy="300" r="32" fill="#8E4F1A"/>
-  <circle cx="409" cy="295" r="62" fill="#C27330"/>
-  <circle cx="412" cy="300" r="32" fill="#8E4F1A"/>
+  <circle cx="216" cy="318" r="9" fill="#0B0B0C"/>
+  <circle cx="296" cy="318" r="9" fill="#0B0B0C"/>
+  <circle cx="243" cy="382" r="5.5" fill="#0B0B0C"/>
+  <circle cx="269" cy="382" r="5.5" fill="#0B0B0C"/>
+  <path d="M240 414 Q256 426 272 414" fill="none" stroke="#0B0B0C" stroke-width="5" stroke-linecap="round"/>
 
-  <ellipse cx="256" cy="320" rx="148" ry="150" fill="#C27330"/>
-
-  <path d="M256 215
-    C 205 222 168 268 168 328
-    C 168 410 206 448 256 448
-    C 306 448 344 410 344 328
-    C 344 268 307 222 256 215 Z"
-    fill="#E8A966" stroke="#B0622A" stroke-width="4"/>
-
-  <ellipse cx="256" cy="392" rx="70" ry="46" fill="#FAEBCD" stroke="#E0C79B" stroke-width="3"/>
-
-  <circle cx="216" cy="296" r="8" fill="#171719"/>
-  <circle cx="296" cy="296" r="8" fill="#171719"/>
-  <circle cx="242" cy="388" r="5" fill="#171719"/>
-  <circle cx="270" cy="388" r="5" fill="#171719"/>
-  <path d="M243 414 Q256 424 269 414" fill="none" stroke="#171719" stroke-width="5" stroke-linecap="round"/>
-
-  <path d="M206 176 V104 Q206 96 214 96 H298 Q306 96 306 104 V176 Z"
-    fill="#141416" stroke="#E6E6EA" stroke-width="3"/>
-  <rect x="222" y="104" width="16" height="46" rx="8" fill="#3A3A40" opacity="0.85"/>
-  <rect x="206" y="150" width="100" height="26" fill="#B0123A"/>
-  <rect x="206" y="174" width="100" height="2" fill="#8C0D2D"/>
-  <ellipse cx="256" cy="188" rx="102" ry="13" fill="#141416" stroke="#E6E6EA" stroke-width="3"/>
-
-  <path d="M184 206 Q256 222 328 206" fill="none" stroke="#8E4F1A" stroke-width="8" opacity="0.55" stroke-linecap="round"/>
+  <path d="M213 180 V108 Q213 98 223 98 H289 Q299 98 299 108 V180 Z"
+    fill="#0B0B0C" stroke="#5B8CFF" stroke-width="3"/>
+  <rect x="209" y="150" width="94" height="30" fill="#B0123A"/>
+  <ellipse cx="256" cy="186" rx="108" ry="14" fill="#0B0B0C" stroke="#5B8CFF" stroke-width="3"/>
 </svg>
