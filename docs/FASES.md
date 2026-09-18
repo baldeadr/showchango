@@ -1,0 +1,84 @@
+# Fases
+
+> Roadmap vivo de Show Chango. Marcar `- [x]` solo cuando la tarea esté hecha y verificada.
+
+---
+
+## F0 — Cimiento (en curso)
+
+Objetivo: repo funcional, esquema congelado, app web servible.
+
+- [x] `git init` + estructura de carpetas.
+- [x] `.gitignore`, `pyproject.toml`, `Dockerfile` base.
+- [x] `README.md` (absorbe la ficha y decisiones).
+- [x] `AGENTS.md` (puerta LLM con leyes del proyecto).
+- [x] `docs/ARQUITECTURA.md`, `docs/ESQUEMA-JSON.md`, `docs/FASES.md`.
+- [x] `bitacora/2026-09.md` (entrada de la sesión).
+- [x] `core/esquema.py` con esquema JSON v1 + tests de round-trip.
+- [x] Esqueleto FastAPI: home, crear set, set vacío en sesión RAM + exportar JSON + tests.
+- [x] `pytest` y `ruff check` en verde; `uvicorn` sirve la app.
+- [x] Actualizar `architecting-a-band` (ficha archivo, referencias, bitácora).
+- [x] Commit inicial en ambos repos.
+
+---
+
+## F1 — MVP usable
+
+Criterio de salida: armar el setlist de Apex Ultra del 25-sep 100% en Show Chango; el PDF sirve para ensayo y el JSON reimporta idéntico.
+
+### M1 — Importar (y guardar con JSON desde el día 1)
+
+- [ ] Formulario manual de pista (título, artista, BPM, energía, bailabilidad, duración, etc.).
+- [ ] Importar CSV/Excel (caso real de los setlists en Excel).
+- [ ] Subir audio: análisis efímero con librosa, caché por hash, HTMX polling.
+- [ ] Editar cualquier atributo a mano.
+- [ ] **Exportar e importar JSON** como mecanismo de persistencia desde el inicio.
+
+### M2 — Curva + drag & drop
+
+- [ ] Renderizar lista de pistas con SortableJS.
+- [ ] Curva con Chart.js; recalcular en vivo al reordenar.
+- [ ] Persistir el orden en la sesión temporal.
+
+### M3 — Diagnóstico
+
+- [ ] Plantillas de arco objetivo (al menos: clímax al 70%, construcción DJ, picos rock).
+- [ ] Detección de valles y picos.
+- [ ] Alerta de bloques repetidos (≥3 pistas con BPM/energía similares).
+- [ ] Alerta de posiciones desperdiciadas.
+
+### M4 — Export completo + round-trip
+
+- [ ] CSV de datos.
+- [ ] Markdown estructurado legible por LLM.
+- [ ] PNG/SVG de la gráfica (matplotlib).
+- [ ] PDF del show (WeasyPrint).
+- [ ] Test de oro: exportar → importar → exportar = idéntico.
+
+---
+
+## F2 — Producto público
+
+- [ ] Landing con explicación y privacidad.
+- [ ] Deploy en free tier (stateless, sin cuentas).
+- [ ] Búsqueda/metadata con Spotify.
+- [ ] Decidir modelo de acceso: gratis, freemium, pago `[PENDIENTE]`.
+- [ ] Evaluar si mantener el modelo sin almacenamiento como feature permanente.
+
+---
+
+## F3 — Inteligencia `[PROPUESTA]`
+
+- [ ] Recomendador de orden según curva objetivo + género/tipo de evento + contexto.
+- [ ] Perfiles/plantillas de arco por género (electrónica, rock, cumbia, industrial bailable, etc.).
+- [ ] Diagnóstico explicado con sugerencias y porqué.
+- [ ] Consumo del export Markdown por LLM para razonar sobre el set.
+
+---
+
+## Fuera del MVP
+
+- Cuentas de usuario.
+- Colaboración en tiempo real.
+- Multi-idioma.
+- App nativa de escritorio o móvil.

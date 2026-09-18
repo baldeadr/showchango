@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <h2>Arma el setlist de tu show</h2>
+  <p>Sube o importa tus canciones, ordénalas con drag & drop y visualiza la curva de energía.</p>
+</section>
+
+<section class="nuevo-set">
+  <h3>Crear un set nuevo</h3>
+  <form method="post" action="/set/nuevo">
+    <label>
+      Nombre del show
+      <input type="text" name="nombre" placeholder="Ej. Apex Ultra — Trve Café">
+    </label>
+    <label>
+      Artista
+      <input type="text" name="artista" placeholder="Ej. Apex Ultra">
+    </label>
+    <button type="submit">Crear set</button>
+  </form>
+</section>
+
+{% if proyecto %}
+<section class="continuar">
+  <p>Tienes un set en curso: <strong>{{ proyecto.show.nombre or "Sin nombre" }}</strong></p>
+  <a class="button" href="/set">Continuar set</a>
+</section>
+{% endif %}
+{% endblock %}

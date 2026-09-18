@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Show Chango{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/estilo.css') }}">
+</head>
+<body>
+  <header>
+    <h1><a href="/">Show Chango</a></h1>
+    <p>El orquestador de tus setlists</p>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <footer>
+    <p>Nada se almacena. Exporta tu set como JSON.</p>
+  </footer>
+</body>
+</html>

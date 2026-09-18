@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ proyecto.show.nombre or "Set" }} — Show Chango{% endblock %}
+
+{% block content %}
+<nav>
+  <a href="/">← Volver al inicio</a>
+</nav>
+
+<h2>{{ proyecto.show.nombre or "Set sin nombre" }}</h2>
+<p class="meta">Artista: {{ proyecto.show.artista or "Sin artista" }}</p>
+
+<section class="set-vacio">
+  <p>Aún no hay pistas en este set.</p>
+  <p>En la siguiente fase podrás importar canciones manualmente, por CSV/Excel o subiendo audio.</p>
+</section>
+
+<section class="acciones">
+  <a class="button" href="/set/exportar">Exportar JSON</a>
+  <form method="post" action="/set/cerrar" class="inline">
+    <button type="submit" class="secondary">Cerrar set</button>
+  </form>
+</section>
+{% endblock %}
