@@ -68,11 +68,11 @@
   <circle cx="309" cy="297" r="3.5" fill="#FFFFFF" opacity="0.85"/>
 
   <path d="M204 90 Q204 78 216 78 H296 Q308 78 308 90
-    L326 170 L342 198 A86 20 0 0 1 304 214 H208
-    A86 20 0 0 1 170 198 L186 170 Z"
+    L328 170 L356 200 A100 22 0 0 1 306 216 H206
+    A100 22 0 0 1 156 200 L186 170 Z"
     fill="#0A0A0C" stroke="#7EA0EE" stroke-width="2" stroke-linejoin="round"/>
   <path d="M204 90 Q204 78 216 78 H296 Q308 78 308 90 V106 H204 Z" fill="#30353B"/>
-  <path d="M190 166 L322 166 L330 196 H182 Z" fill="#B21234"/>
+  <path d="M190 166 L322 166 L332 196 H180 Z" fill="#B21234"/>
 
   <rect x="219" y="90" width="15" height="72" rx="7.5" fill="#FFFFFF" opacity="0.18"/>
   <ellipse cx="256" cy="196" rx="66" ry="5" fill="#FFFFFF" opacity="0.20"/>
