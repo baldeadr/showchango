@@ -81,7 +81,28 @@ def _float_or_none(valor: str) -> float | None:
     if valor is None:
         return None
     valor = str(valor).strip().replace(",", ".")
-    return float(valor) if valor != "" else None
+    if valor == "":
+        return None
+    if ":" in valor:
+        partes = valor.split(":")
+        msg_duracion = (
+            f"Formato de duración no válido: '{valor}'. "
+            "Usa segundos (190) o minutos:segundos (3:10)."
+        )
+        if len(partes) != 2:
+            raise ValueError(msg_duracion)
+        try:
+            minutos = float(partes[0])
+            segundos = float(partes[1])
+        except ValueError as exc:
+            raise ValueError(msg_duracion) from exc
+        if minutos < 0 or segundos < 0 or segundos >= 60:
+            raise ValueError(f"Duración no válida: '{valor}'.")
+        return round(minutos * 60 + segundos, 6)
+    try:
+        return float(valor)
+    except ValueError as exc:
+        raise ValueError(f"Valor numérico no válido: '{valor}'.") from exc
 
 
 def _voz_or_none(valor: str) -> str | None:
@@ -200,6 +221,19 @@ def crear_app() -> FastAPI:
         if proyecto is None:
             return RedirectResponse("/", status_code=303)
         return proyecto
+
+    def _render_set(request: Request, proyecto: Proyecto, error: str | None = None):
+        return templates.TemplateResponse(
+            request,
+            "set.html",
+            {
+                "proyecto": proyecto,
+                "curva_json": json.dumps(
+                    datos_para_chartjs(proyecto), ensure_ascii=False
+                ),
+                "error": error,
+            },
+        )
 
     def _analizar_audio(
         job_id: str,
@@ -347,23 +381,26 @@ def crear_app() -> FastAPI:
         if isinstance(resultado, RedirectResponse):
             return resultado
         if not titulo.strip():
-            raise HTTPException(status_code=400, detail="El título es obligatorio.")
-        pista = Pista(
-            id=nuevo_id(),
-            titulo=titulo.strip(),
-            artista=artista.strip(),
-            bpm=_float_or_none(bpm),
-            energia=_float_or_none(energia),
-            bailabilidad=_float_or_none(bailabilidad),
-            duracion_s=_float_or_none(duracion_s),
-            loudness_db=_float_or_none(loudness_db),
-            valencia=_float_or_none(valencia),
-            voz=_voz_or_none(voz),
-            genero=genero.strip() or None,
-            tonalidad=tonalidad.strip() or None,
-            fuente="manual",
-            notas=notas.strip(),
-        )
+            return _render_set(request, resultado, error="El título es obligatorio.")
+        try:
+            pista = Pista(
+                id=nuevo_id(),
+                titulo=titulo.strip(),
+                artista=artista.strip(),
+                bpm=_float_or_none(bpm),
+                energia=_float_or_none(energia),
+                bailabilidad=_float_or_none(bailabilidad),
+                duracion_s=_float_or_none(duracion_s),
+                loudness_db=_float_or_none(loudness_db),
+                valencia=_float_or_none(valencia),
+                voz=_voz_or_none(voz),
+                genero=genero.strip() or None,
+                tonalidad=tonalidad.strip() or None,
+                fuente="manual",
+                notas=notas.strip(),
+            )
+        except ValueError as exc:
+            return _render_set(request, resultado, error=str(exc))
         resultado.pistas.append(pista)
         resultado.orden.append(pista.id)
         sesiones.guardar_proyecto(sid, resultado)
@@ -392,18 +429,21 @@ def crear_app() -> FastAPI:
             return resultado
         for pista in resultado.pistas:
             if pista.id == pista_id:
-                pista.titulo = titulo.strip() or pista.titulo
-                pista.artista = artista.strip()
-                pista.bpm = _float_or_none(bpm)
-                pista.energia = _float_or_none(energia)
-                pista.bailabilidad = _float_or_none(bailabilidad)
-                pista.duracion_s = _float_or_none(duracion_s)
-                pista.loudness_db = _float_or_none(loudness_db)
-                pista.valencia = _float_or_none(valencia)
-                pista.voz = _voz_or_none(voz)
-                pista.genero = genero.strip() or None
-                pista.tonalidad = tonalidad.strip() or None
-                pista.notas = notas.strip()
+                try:
+                    pista.titulo = titulo.strip() or pista.titulo
+                    pista.artista = artista.strip()
+                    pista.bpm = _float_or_none(bpm)
+                    pista.energia = _float_or_none(energia)
+                    pista.bailabilidad = _float_or_none(bailabilidad)
+                    pista.duracion_s = _float_or_none(duracion_s)
+                    pista.loudness_db = _float_or_none(loudness_db)
+                    pista.valencia = _float_or_none(valencia)
+                    pista.voz = _voz_or_none(voz)
+                    pista.genero = genero.strip() or None
+                    pista.tonalidad = tonalidad.strip() or None
+                    pista.notas = notas.strip()
+                except ValueError as exc:
+                    return _render_set(request, resultado, error=str(exc))
                 break
         sesiones.guardar_proyecto(sid, resultado)
         return RedirectResponse("/set", status_code=303)

@@ -88,6 +88,29 @@ def test_agregar_pista_manual():
     assert "Apex Ultra" in respuesta.text
 
 
+def test_duracion_en_minutos_segundos():
+    c = client()
+    c.post("/set/nuevo", data={"nombre": "Set", "artista": "Test"})
+    c.post(
+        "/pista/nueva",
+        data={"titulo": "Larga", "duracion_s": "3:10"},
+    )
+    respuesta = c.get("/set")
+    assert respuesta.status_code == 200
+    assert "3:10" in respuesta.text or "190" in respuesta.text
+
+
+def test_duracion_invalida_muestra_error():
+    c = client()
+    c.post("/set/nuevo", data={"nombre": "Set", "artista": "Test"})
+    respuesta = c.post(
+        "/pista/nueva",
+        data={"titulo": "Mala", "duracion_s": "foo"},
+    )
+    assert respuesta.status_code == 200
+    assert "no válido" in respuesta.text
+
+
 def test_editar_y_eliminar_pista():
     c = client()
     c.post("/set/nuevo", data={"nombre": "Set", "artista": "Test"})

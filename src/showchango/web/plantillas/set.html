@@ -10,6 +10,12 @@
 <h2>{{ proyecto.show.nombre or "Set sin nombre" }}</h2>
 <p class="meta">Artista: {{ proyecto.show.artista or "Sin artista" }} · {{ proyecto.orden|length }} pista(s)</p>
 
+{% if error %}
+<section class="error">
+  <p>{{ error }}</p>
+</section>
+{% endif %}
+
 {% if proyecto.orden %}
 <section class="curva">
   <h3>Curva del show</h3>
@@ -47,7 +53,7 @@
           <th>BPM</th>
           <th>Energía</th>
           <th>Bail.</th>
-          <th>Dur. (s)</th>
+          <th>Duración</th>
           <th>Loud.</th>
           <th>Val.</th>
           <th>Voz</th>
@@ -110,7 +116,7 @@
     <label>BPM <input type="text" name="bpm"></label>
     <label>Energía (0–1) <input type="text" name="energia"></label>
     <label>Bailabilidad (0–1) <input type="text" name="bailabilidad"></label>
-    <label>Duración (s) <input type="text" name="duracion_s"></label>
+    <label>Duración (s o m:ss) <input type="text" name="duracion_s"></label>
     <label>Loudness (dB) <input type="text" name="loudness_db"></label>
     <label>Valencia (0–1) <input type="text" name="valencia"></label>
     <label>Voz
