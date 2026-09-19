@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const ctx = canvas.getContext("2d");
   const datos = window.__CURVA_INICIAL__;
 
+  Chart.register(ChartDataLabels);
+
   function formatearMinutos(minutos) {
     const m = Math.floor(minutos);
     const s = Math.floor((minutos - m) * 60)
@@ -17,6 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const maxTiempo = datos.puntos_energia.length > 0
     ? Math.max(...datos.puntos_energia.map((p) => p.x), 1)
     : 1;
+
+  function labelPista(_value, context) {
+    return datos.titulos[context.dataIndex] || "";
+  }
 
   const chart = new Chart(ctx, {
     type: "line",
@@ -31,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
           stepped: "before",
           tension: 0,
           fill: true,
+          datalabels: { display: false },
         },
         {
           label: "Energía",
@@ -40,6 +47,14 @@ document.addEventListener("DOMContentLoaded", () => {
           pointBackgroundColor: "#ff6b35",
           pointBorderColor: "#fff",
           pointBorderWidth: 2,
+          datalabels: {
+            align: "top",
+            anchor: "center",
+            color: "#e6e6e6",
+            font: { size: 11 },
+            offset: 6,
+            formatter: labelPista,
+          },
         },
         {
           label: "Bailabilidad",
@@ -51,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
           tension: 0,
           fill: true,
           hidden: true,
+          datalabels: { display: false },
         },
         {
           label: "Bailabilidad",
@@ -61,6 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
           pointBorderColor: "#fff",
           pointBorderWidth: 2,
           hidden: true,
+          datalabels: {
+            align: "top",
+            anchor: "center",
+            color: "#e6e6e6",
+            font: { size: 11 },
+            offset: 6,
+            formatter: labelPista,
+          },
         },
       ],
     },
