@@ -25,22 +25,41 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           label: "Energía",
           data: datos.puntos_energia,
-          pointRadius: datos.radios_energia,
+          pointRadius: 0,
           borderColor: "#ff6b35",
           backgroundColor: "rgba(255, 107, 53, 0.2)",
-          stepped: "after",
+          stepped: "before",
           tension: 0,
           fill: true,
         },
         {
+          label: "Energía",
+          type: "scatter",
+          data: datos.marcadores_energia,
+          pointRadius: 5,
+          pointBackgroundColor: "#ff6b35",
+          pointBorderColor: "#fff",
+          pointBorderWidth: 2,
+        },
+        {
           label: "Bailabilidad",
           data: datos.puntos_bailabilidad,
-          pointRadius: datos.radios_bailabilidad,
+          pointRadius: 0,
           borderColor: "#4dd0a1",
           backgroundColor: "rgba(77, 208, 161, 0.2)",
-          stepped: "after",
+          stepped: "before",
           tension: 0,
           fill: true,
+          hidden: true,
+        },
+        {
+          label: "Bailabilidad",
+          type: "scatter",
+          data: datos.marcadores_bailabilidad,
+          pointRadius: 5,
+          pointBackgroundColor: "#4dd0a1",
+          pointBorderColor: "#fff",
+          pointBorderWidth: 2,
           hidden: true,
         },
       ],
@@ -71,10 +90,11 @@ document.addEventListener("DOMContentLoaded", () => {
       plugins: {
         legend: { labels: { color: "#e6e6e6" } },
         tooltip: {
+          filter: (item) => item.dataset.type === "scatter",
           callbacks: {
             title: (items) => {
               const idx = items[0]?.dataIndex;
-              return idx !== undefined ? datos.titulos_marcadores[idx] : "";
+              return idx !== undefined ? datos.titulos[idx] : "";
             },
             label: (item) => {
               const idx = item.dataIndex;
@@ -113,13 +133,12 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then((nuevosDatos) => {
           datos.titulos = nuevosDatos.titulos;
-          datos.titulos_marcadores = nuevosDatos.titulos_marcadores;
           datos.tiempos_min = nuevosDatos.tiempos_min;
           datos.duraciones_s = nuevosDatos.duraciones_s;
           chart.data.datasets[0].data = nuevosDatos.puntos_energia;
-          chart.data.datasets[0].pointRadius = nuevosDatos.radios_energia;
-          chart.data.datasets[1].data = nuevosDatos.puntos_bailabilidad;
-          chart.data.datasets[1].pointRadius = nuevosDatos.radios_bailabilidad;
+          chart.data.datasets[1].data = nuevosDatos.marcadores_energia;
+          chart.data.datasets[2].data = nuevosDatos.puntos_bailabilidad;
+          chart.data.datasets[3].data = nuevosDatos.marcadores_bailabilidad;
           chart.options.scales.x.max = nuevosDatos.puntos_energia.length > 0
             ? Math.max(...nuevosDatos.puntos_energia.map((p) => p.x), 1)
             : 1;

@@ -43,14 +43,16 @@ def calcular_curva(proyecto: Proyecto) -> dict:
 def datos_para_chartjs(proyecto: Proyecto) -> dict:
     """Adapta la curva al formato más cómodo para Chart.js.
 
-    Devuelve puntos `{x: tiempo_min, y: valor}` para poder usar el eje X como
-    una escala lineal de tiempo real del show.
-
-    Se agrega un punto final al tiempo de finalización de la última pista
-    para que la línea "stepped" represente correctamente toda la duración.
+    Devuelve:
+    - Puntos de línea `{x: tiempo_min, y: valor}` con `stepped: 'before'`
+      para representar la energía/bailabilidad de cada pista durante su
+      duración real.
+    - Puntos de marcador en el centro de cada pista para identificarla
+      visualmente sin confundir los límites.
     """
     curva = calcular_curva(proyecto)
     puntos = curva["puntos"]
+
     puntos_energia = [{"x": p["tiempo_min"], "y": p["energia"]} for p in puntos]
     puntos_bailabilidad = [
         {"x": p["tiempo_min"], "y": p["bailabilidad"]} for p in puntos
@@ -61,12 +63,20 @@ def datos_para_chartjs(proyecto: Proyecto) -> dict:
         puntos_energia.append({"x": fin, "y": puntos[-1]["energia"]})
         puntos_bailabilidad.append({"x": fin, "y": puntos[-1]["bailabilidad"]})
 
-    # Los marcadores se dibujan al final de cada pista, es decir, en el
-    # punto de inicio de la siguiente pista (o en el final del show para la
-    # última). Así la posición del punto en el eje X coincide con el tiempo
-    # acumulado hasta terminar esa canción.
-    radios = [0] + [4] * len(puntos)
-    titulos_marcadores = [""] + [p["titulo"] for p in puntos]
+    marcadores_energia = [
+        {
+            "x": round(p["tiempo_min"] + (p["duracion_s"] / 60.0) / 2, 2),
+            "y": p["energia"],
+        }
+        for p in puntos
+    ]
+    marcadores_bailabilidad = [
+        {
+            "x": round(p["tiempo_min"] + (p["duracion_s"] / 60.0) / 2, 2),
+            "y": p["bailabilidad"],
+        }
+        for p in puntos
+    ]
 
     return {
         "etiquetas": [p["titulo"] for p in puntos],
@@ -75,10 +85,9 @@ def datos_para_chartjs(proyecto: Proyecto) -> dict:
         "tiempos_min": [p["tiempo_min"] for p in puntos],
         "puntos_energia": puntos_energia,
         "puntos_bailabilidad": puntos_bailabilidad,
-        "radios_energia": radios,
-        "radios_bailabilidad": radios,
+        "marcadores_energia": marcadores_energia,
+        "marcadores_bailabilidad": marcadores_bailabilidad,
         "duraciones_s": [p["duracion_s"] for p in puntos],
         "titulos": [p["titulo"] for p in puntos],
-        "titulos_marcadores": titulos_marcadores,
         **curva,
     }
