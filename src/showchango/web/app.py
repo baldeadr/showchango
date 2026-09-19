@@ -208,13 +208,23 @@ def crear_app() -> FastAPI:
     app = FastAPI(title="Show Chango", docs_url=docs_url)
     app.mount("/static", StaticFiles(directory=STATIC), name="static")
     templates = Jinja2Templates(directory=PLANTILLAS)
-    _css_path = STATIC / "css" / "estilo.css"
-    _css_version = (
-        hashlib.sha256(_css_path.read_bytes()).hexdigest()[:8]
-        if _css_path.exists()
-        else "0"
-    )
-    templates.env.globals["css_version"] = _css_version
+
+    def _hash_archivo(ruta: Path) -> str:
+        try:
+            return hashlib.sha256(ruta.read_bytes()).hexdigest()[:8]
+        except FileNotFoundError:
+            return "0"
+
+    _STATIC_HASHES = {
+        str(p.relative_to(STATIC)): _hash_archivo(p)
+        for p in STATIC.rglob("*")
+        if p.is_file()
+    }
+
+    def static_hash(path: str) -> str:
+        return _STATIC_HASHES.get(path.lstrip("/"), "0")
+
+    templates.env.globals["static_hash"] = static_hash
     sesiones = Sesiones()
     cache = Cache()
     analyzer = LibrosaAnalyzer()
