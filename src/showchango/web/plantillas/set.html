@@ -65,6 +65,9 @@
       {% set pista = proyecto.pistas | selectattr('id', 'equalto', pista_id) | first %}
       <li data-id="{{ pista.id }}">
         <span class="handle" aria-label="Arrastrar">☰</span>
+        <button type="button" class="small editar-pista" aria-label="Editar" onclick="document.getElementById('modal-editar-{{ pista.id }}').showModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+        </button>
         <span class="num">{{ loop.index }}</span>
         <span class="titulo">{{ pista.titulo }}</span>
         {% if pista.artista %}<span class="artista">{{ pista.artista }}</span>{% endif %}
@@ -73,7 +76,6 @@
           {% if pista.energia is not none %}<span class="badge">E {{ pista.energia }}</span>{% endif %}
           {% if pista.duracion_s %}<span class="badge">{{ pista.duracion_s // 60 }}:{{ "%02d" | format(pista.duracion_s % 60) }}</span>{% endif %}
         </span>
-        <button type="button" class="small editar-pista" aria-label="Editar" onclick="document.getElementById('modal-editar-{{ pista.id }}').showModal()">&#9999;</button>
       </li>
       {% endfor %}
     </ul>

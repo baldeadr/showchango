@@ -368,8 +368,9 @@ td.actions {
 }
 
 .sortable-list li button.editar-pista {
-  margin-top: auto;
-  align-self: flex-start;
+  align-self: flex-end;
+  padding: 0.25rem;
+  line-height: 1;
 }
 
 .badge {
