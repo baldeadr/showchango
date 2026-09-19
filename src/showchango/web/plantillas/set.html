@@ -10,13 +10,45 @@
 <h2>{{ proyecto.show.nombre or "Set sin nombre" }}</h2>
 <p class="meta">Artista: {{ proyecto.show.artista or "Sin artista" }} · {{ proyecto.orden|length }} pista(s)</p>
 
+<div class="acciones-set">
+  <button type="button" class="button" onclick="document.getElementById('modal-pista').showModal()">Agregar pista</button>
+</div>
+
+<dialog id="modal-pista" class="modal-pista">
+  <div class="modal-header">
+    <h3>Agregar pista</h3>
+    <button type="button" class="small secondary" onclick="document.getElementById('modal-pista').close()">Cerrar</button>
+  </div>
+  <form method="post" action="/pista/nueva" class="grid-form">
+    <label>Título <input type="text" name="titulo" required></label>
+    <label>Artista <input type="text" name="artista" value="{{ proyecto.show.artista }}"></label>
+    <label>BPM <input type="text" name="bpm"></label>
+    <label>Energía (0–1) <input type="text" name="energia"></label>
+    <label>Bailabilidad (0–1) <input type="text" name="bailabilidad"></label>
+    <label>Duración (s o m:ss) <input type="text" name="duracion_s"></label>
+    <label>Loudness (dB) <input type="text" name="loudness_db"></label>
+    <label>Valencia (0–1) <input type="text" name="valencia"></label>
+    <label>Voz
+      <select name="voz">
+        <option value="">—</option>
+        <option value="vocal">Vocal</option>
+        <option value="instrumental">Instrumental</option>
+        <option value="mixto">Mixto</option>
+      </select>
+    </label>
+    <label>Género <input type="text" name="genero"></label>
+    <label>Tonalidad <input type="text" name="tonalidad"></label>
+    <label>Notas <input type="text" name="notas"></label>
+    <button type="submit">Agregar pista</button>
+  </form>
+</dialog>
+
 {% if error %}
 <section class="error">
   <p>{{ error }}</p>
 </section>
 {% endif %}
 
-{% if proyecto.orden %}
 <section class="curva">
   <h3>Curva del show</h3>
   <div class="chart-wrap">
@@ -24,6 +56,7 @@
   </div>
 </section>
 
+{% if proyecto.orden %}
 <section class="orden-pistas">
   <h3>Orden del set (arrastra para reordenar)</h3>
   <div class="timeline-scroll">
@@ -159,34 +192,6 @@
   <p>Agrega canciones manualmente, importa un CSV/Excel, sube audio o importa un JSON.</p>
 </section>
 {% endif %}
-
-<section class="agregar-pista">
-  <details>
-    <summary class="button">Agregar pista</summary>
-    <form method="post" action="/pista/nueva" class="grid-form">
-    <label>Título <input type="text" name="titulo" required></label>
-    <label>Artista <input type="text" name="artista" value="{{ proyecto.show.artista }}"></label>
-    <label>BPM <input type="text" name="bpm"></label>
-    <label>Energía (0–1) <input type="text" name="energia"></label>
-    <label>Bailabilidad (0–1) <input type="text" name="bailabilidad"></label>
-    <label>Duración (s o m:ss) <input type="text" name="duracion_s"></label>
-    <label>Loudness (dB) <input type="text" name="loudness_db"></label>
-    <label>Valencia (0–1) <input type="text" name="valencia"></label>
-    <label>Voz
-      <select name="voz">
-        <option value="">—</option>
-        <option value="vocal">Vocal</option>
-        <option value="instrumental">Instrumental</option>
-        <option value="mixto">Mixto</option>
-      </select>
-    </label>
-    <label>Género <input type="text" name="genero"></label>
-    <label>Tonalidad <input type="text" name="tonalidad"></label>
-    <label>Notas <input type="text" name="notas"></label>
-    <button type="submit">Agregar pista</button>
-    </form>
-  </details>
-</section>
 
 <section class="importar-csv">
   <h3>Importar CSV / Excel</h3>

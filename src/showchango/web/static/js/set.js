@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById("curva-canvas");
   const lista = document.getElementById("lista-pistas");
-  if (!canvas || !lista) return;
+  if (!canvas) return;
 
   const ctx = canvas.getContext("2d");
   const datos = window.__CURVA_INICIAL__;
@@ -13,6 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
       .padStart(2, "0");
     return `${m}:${s}`;
   }
+
+  const maxTiempo = datos.tiempos_min.length > 0
+    ? Math.max(...datos.tiempos_min, 1)
+    : 1;
 
   const chart = new Chart(ctx, {
     type: "line",
@@ -52,6 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         x: {
           type: "linear",
+          min: 0,
+          max: maxTiempo,
           title: { display: true, text: "Tiempo del show", color: "#999" },
           grid: { color: "#2a2a30" },
           ticks: {
@@ -65,14 +71,16 @@ document.addEventListener("DOMContentLoaded", () => {
         tooltip: {
           callbacks: {
             title: (items) => {
-              const idx = items[0].dataIndex;
-              return datos.titulos[idx];
+              const idx = items[0]?.dataIndex;
+              return idx !== undefined ? datos.titulos[idx] : "";
             },
           },
         },
       },
     },
   });
+
+  if (!lista) return;
 
   Sortable.create(lista, {
     animation: 150,
@@ -90,8 +98,12 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then((nuevosDatos) => {
           datos.titulos = nuevosDatos.titulos;
+          datos.tiempos_min = nuevosDatos.tiempos_min;
           chart.data.datasets[0].data = nuevosDatos.puntos_energia;
           chart.data.datasets[1].data = nuevosDatos.puntos_bailabilidad;
+          chart.options.scales.x.max = nuevosDatos.tiempos_min.length > 0
+            ? Math.max(...nuevosDatos.tiempos_min, 1)
+            : 1;
           chart.update();
         })
         .catch((err) => {

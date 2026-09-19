@@ -175,16 +175,33 @@ section {
   padding: 1.5rem;
 }
 
-.agregar-pista details > summary {
-  list-style: none;
+.acciones-set {
+  margin-bottom: 1.5rem;
 }
 
-.agregar-pista details > summary::-webkit-details-marker {
-  display: none;
+.modal-pista {
+  background: var(--tarjeta);
+  color: var(--texto);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 1.5rem;
+  max-width: 900px;
+  width: 90%;
 }
 
-.agregar-pista details[open] > summary {
+.modal-pista::backdrop {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1rem;
+}
+
+.modal-header h3 {
+  margin: 0;
 }
 
 .grid-form {

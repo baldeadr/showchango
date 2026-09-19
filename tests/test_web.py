@@ -120,8 +120,8 @@ def test_editar_y_eliminar_pista():
     assert "Original" in respuesta.text
 
     # Extraer el id de la pista del formulario de edición
-    inicio = respuesta.text.find('action="/pista/') + len('action="/pista/')
-    fin = respuesta.text.find('/actualizar', inicio)
+    fin = respuesta.text.find('/actualizar')
+    inicio = respuesta.text.rfind('action="/pista/', 0, fin) + len('action="/pista/')
     pista_id = respuesta.text[inicio:fin]
 
     c.post(
