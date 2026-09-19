@@ -73,7 +73,7 @@
           {% if pista.energia is not none %}<span class="badge">E {{ pista.energia }}</span>{% endif %}
           {% if pista.duracion_s %}<span class="badge">{{ pista.duracion_s // 60 }}:{{ "%02d" | format(pista.duracion_s % 60) }}</span>{% endif %}
         </span>
-        <button type="button" class="small editar-pista" onclick="document.getElementById('modal-editar-{{ pista.id }}').showModal()">Editar</button>
+        <button type="button" class="small editar-pista" aria-label="Editar" onclick="document.getElementById('modal-editar-{{ pista.id }}').showModal()">&#9999;</button>
       </li>
       {% endfor %}
     </ul>
