@@ -14,6 +14,7 @@ from fastapi import BackgroundTasks, FastAPI, File, Form, HTTPException, Query, 
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from showchango.analytics.librosa_analyzer import LibrosaAnalyzer
 from showchango.core.curva import datos_para_chartjs
@@ -201,7 +202,9 @@ def _parse_excel(contenido: bytes) -> list[Pista]:
 
 
 def crear_app() -> FastAPI:
-    app = FastAPI(title="Show Chango")
+    entorno = os.environ.get("SHOWCHANGO_ENV", "development")
+    docs_url = None if entorno == "production" else "/docs"
+    app = FastAPI(title="Show Chango", docs_url=docs_url)
     app.mount("/static", StaticFiles(directory=STATIC), name="static")
     templates = Jinja2Templates(directory=PLANTILLAS)
     sesiones = Sesiones()
@@ -209,6 +212,28 @@ def crear_app() -> FastAPI:
     analyzer = LibrosaAnalyzer()
     spotify = SpotifyClient()
     jobs: dict[str, dict] = {}
+
+    @app.get("/health")
+    def health():
+        return {"status": "ok"}
+
+    @app.exception_handler(StarletteHTTPException)
+    async def http_exception_handler(request: Request, exc: StarletteHTTPException):
+        if exc.status_code == 404:
+            return templates.TemplateResponse(
+                request,
+                "error.html",
+                {"codigo": 404, "mensaje": "Página no encontrada."},
+                status_code=404,
+            )
+        if exc.status_code == 500:
+            return templates.TemplateResponse(
+                request,
+                "error.html",
+                {"codigo": 500, "mensaje": "Algo salió mal en el servidor."},
+                status_code=500,
+            )
+        return Response(content=str(exc.detail), status_code=exc.status_code)
 
     def _sid(request: Request) -> str | None:
         return request.cookies.get(COOKIE_SESION)

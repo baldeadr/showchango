@@ -18,21 +18,25 @@ docker run -p 8000:8000 showchango
 ## Fly.io
 
 1. Instala `flyctl` y autentícate.
-2. `fly launch --image showchango` o usa el `Dockerfile` existente.
-3. Expón el puerto `8000`.
-4. La app no necesita volúmenes persistentes ni base de datos (salvo el caché de análisis, que puede recrearse).
+2. Revisa `fly.toml` (app `showchango`, puerto `8000`, 512 MB).
+3. Ejecuta:
+   ```bash
+   fly launch
+   fly deploy
+   ```
+4. La app no necesita volúmenes persistentes ni base de datos.
 
 ## Render
 
 1. Crea un Web Service conectado al repo.
-2. Usa el `Dockerfile` o el comando de inicio:
-   ```bash
-   pip install -e ".[dev]"
-   python -m uvicorn showchango.web.app:app --host 0.0.0.0 --port $PORT
-   ```
-3. Plan gratuito suficiente para uso personal.
+2. Usa `render.yaml` o configura manualmente:
+   - Runtime: Docker
+   - Plan: free
+   - Health check path: `/health`
+3. Render detectará el `Dockerfile` y levantará el servicio.
 
 ## Notas
 
 - La sesión vive en RAM; reiniciar el servicio borra los sets en curso. La persistencia real es el JSON exportado por el usuario.
 - El caché de análisis (`./.data/cache.db`) se puede borrar sin perder información del usuario.
+- En producción, exporta `SHOWCHANGO_ENV=production` para desactivar `/docs` y `/openapi.json`.

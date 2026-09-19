@@ -4,6 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Show Chango{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}Arma, ordena y exporta el setlist de tu show con una curva de energía clara. Sin registro, sin almacenamiento.{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}Show Chango{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}Arma, ordena y exporta el setlist de tu show con una curva de energía clara.{% endblock %}">
+  <meta property="og:type" content="website">
   <link rel="icon" href="{{ url_for('static', path='/logo.svg') }}" type="image/svg+xml">
   <link rel="stylesheet" href="{{ url_for('static', path='/css/estilo.css') }}">
   <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshEEFC8ck/INrBWCQe7v0DnN3GN7PAIZl+oy8YRKdXvN/o4bSW8/tE" crossorigin="anonymous"></script>

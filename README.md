@@ -4,7 +4,7 @@
 
 - **Nombre:** Show Chango — decisión del artista (2026-09-18).
 - **Tagline:** *El orquestador de tus setlists.*
-- **Estado:** Fase 1 — MVP completo (M1 ✔; M2 ✔; M3 ✔; M4 ✔). F2 en curso: landing, deploy y Spotify básico listos; faltan decisiones de modelo de acceso.
+- **Estado:** Fase 1 y F2 completas (MVP + producto público). F3 es opcional.
 - **Repo:** código, docs y bitácora viven aquí (`~/Projects/showchango`).
 - **Principio clave:** **nada se almacena** — ni audio ni sets. El set vive en sesión temporal; la persistencia real es el JSON que exportas.
 
@@ -96,7 +96,7 @@ Ver [`docs/FASES.md`](docs/FASES.md) para el plan completo con checkboxes.
 
 - **F0 — Cimiento (✔):** repo, docs, esquema v1, esqueleto FastAPI.
 - **F1 — MVP:** M1 importar pistas ✔; M2 curva + drag & drop ✔; M3 diagnóstico ✔; M4 export completo ✔.
-- **F2 — Producto público (en curso):** landing ✔, deploy docs ✔, Spotify metadata básica ✔; modelo de acceso decidido: gratis full access.
+- **F2 — Producto público (✔):** landing, deploy configs, Spotify metadata básica, modelo de acceso decidido: gratis full access.
 - **F3 — Inteligencia:** recomendador de orden + diagnóstico explicado + LLM sobre export.
 
 ## Desarrollo
@@ -130,7 +130,7 @@ En `http://127.0.0.1:8001`.
 
 ### Deploy
 
-Ver [`docs/DEPLOY.md`](docs/DEPLOY.md). La app es stateless y no requiere base de datos persistente.
+Ver [`docs/DEPLOY.md`](docs/DEPLOY.md). La app incluye `Dockerfile`, `.dockerignore`, `fly.toml` y `render.yaml` para deploy en free tier. Es stateless y no requiere base de datos persistente.
 
 ## Método y reglas
 

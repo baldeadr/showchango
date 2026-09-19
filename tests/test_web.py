@@ -290,3 +290,15 @@ def test_spotify_buscar_sin_configurar():
     assert respuesta.status_code == 200
     assert "Spotify no está configurado" in respuesta.text
 
+
+def test_health():
+    respuesta = client().get("/health")
+    assert respuesta.status_code == 200
+    assert respuesta.json()["status"] == "ok"
+
+
+def test_pagina_404_amigable():
+    respuesta = client().get("/no-existe")
+    assert respuesta.status_code == 404
+    assert "Página no encontrada" in respuesta.text
+

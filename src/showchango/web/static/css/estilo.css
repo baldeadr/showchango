@@ -500,3 +500,16 @@ td.actions {
   color: #999;
   font-size: 0.875rem;
 }
+
+.error-404,
+.error-500 {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.error-404 h2,
+.error-500 h2 {
+  font-size: 4rem;
+  color: var(--acento);
+  margin-bottom: 0.5rem;
+}

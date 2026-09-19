@@ -57,10 +57,10 @@ Criterio de salida: armar el setlist de Apex Ultra del 25-sep 100% en Show Chang
 
 ---
 
-## F2 — Producto público
+## F2 — Producto público (✔)
 
 - [x] Landing con explicación y privacidad.
-- [x] Deploy en free tier (stateless, sin cuentas).
+- [x] Deploy en free tier (stateless, sin cuentas) con `Dockerfile`, `fly.toml` y `render.yaml`.
 - [x] Búsqueda/metadata con Spotify (metadata básica; audio features deprecadas por Spotify).
 - [x] Decidir modelo de acceso: **gratis con full access**; donaciones o monetización futura posible `[DECIDIDO]`.
 - [x] Evaluar sin almacenamiento: **se mantiene como feature permanente por ahora**; el almacenamiento podría ser una feature paga si algún día se monetiza `[DECIDIDO]`.

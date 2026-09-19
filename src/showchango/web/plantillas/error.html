@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}{{ codigo }} — Show Chango{% endblock %}
+
+{% block content %}
+<section class="error error-{{ codigo }}">
+  <h2>{{ codigo }}</h2>
+  <p>{{ mensaje }}</p>
+  <a class="button" href="/">Volver al inicio</a>
+</section>
+{% endblock %}
