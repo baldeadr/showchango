@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
           callbacks: {
             title: (items) => {
               const idx = items[0]?.dataIndex;
-              return idx !== undefined ? datos.titulos[idx] : "";
+              return idx !== undefined ? datos.titulos_marcadores[idx] : "";
             },
             label: (item) => {
               const idx = item.dataIndex;
@@ -113,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then((nuevosDatos) => {
           datos.titulos = nuevosDatos.titulos;
+          datos.titulos_marcadores = nuevosDatos.titulos_marcadores;
           datos.tiempos_min = nuevosDatos.tiempos_min;
           datos.duraciones_s = nuevosDatos.duraciones_s;
           chart.data.datasets[0].data = nuevosDatos.puntos_energia;

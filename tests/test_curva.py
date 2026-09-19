@@ -60,7 +60,8 @@ def test_datos_para_chartjs():
         "x": datos["duracion_total_min"],
         "y": 0.6,
     }
-    assert datos["radios_energia"] == [4, 0]
-    assert datos["radios_bailabilidad"] == [4, 0]
+    assert datos["radios_energia"] == [0, 4]
+    assert datos["radios_bailabilidad"] == [0, 4]
     assert datos["duraciones_s"] == [100]
     assert datos["titulos"] == ["A"]
+    assert datos["titulos_marcadores"] == ["", "A"]

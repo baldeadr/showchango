@@ -61,7 +61,12 @@ def datos_para_chartjs(proyecto: Proyecto) -> dict:
         puntos_energia.append({"x": fin, "y": puntos[-1]["energia"]})
         puntos_bailabilidad.append({"x": fin, "y": puntos[-1]["bailabilidad"]})
 
-    radios = [4] * len(puntos) + [0]
+    # Los marcadores se dibujan al final de cada pista, es decir, en el
+    # punto de inicio de la siguiente pista (o en el final del show para la
+    # última). Así la posición del punto en el eje X coincide con el tiempo
+    # acumulado hasta terminar esa canción.
+    radios = [0] + [4] * len(puntos)
+    titulos_marcadores = [""] + [p["titulo"] for p in puntos]
 
     return {
         "etiquetas": [p["titulo"] for p in puntos],
@@ -74,5 +79,6 @@ def datos_para_chartjs(proyecto: Proyecto) -> dict:
         "radios_bailabilidad": radios,
         "duraciones_s": [p["duracion_s"] for p in puntos],
         "titulos": [p["titulo"] for p in puntos],
+        "titulos_marcadores": titulos_marcadores,
         **curva,
     }
