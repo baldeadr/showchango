@@ -73,10 +73,43 @@
           {% if pista.energia is not none %}<span class="badge">E {{ pista.energia }}</span>{% endif %}
           {% if pista.duracion_s %}<span class="badge">{{ pista.duracion_s // 60 }}:{{ "%02d" | format(pista.duracion_s % 60) }}</span>{% endif %}
         </span>
+        <button type="button" class="small editar-pista" onclick="document.getElementById('modal-editar-{{ pista.id }}').showModal()">Editar</button>
       </li>
       {% endfor %}
     </ul>
   </div>
+
+  {% for pista_id in proyecto.orden %}
+  {% set pista = proyecto.pistas | selectattr('id', 'equalto', pista_id) | first %}
+  <dialog id="modal-editar-{{ pista.id }}" class="modal-pista">
+    <div class="modal-header">
+      <h3>Editar pista</h3>
+      <button type="button" class="small secondary" onclick="document.getElementById('modal-editar-{{ pista.id }}').close()">Cerrar</button>
+    </div>
+    <form method="post" action="/pista/{{ pista.id }}/actualizar" class="grid-form">
+      <label>Título <input type="text" name="titulo" value="{{ pista.titulo }}" required></label>
+      <label>Artista <input type="text" name="artista" value="{{ pista.artista }}"></label>
+      <label>BPM <input type="text" name="bpm" value="{{ pista.bpm or '' }}"></label>
+      <label>Energía (0–1) <input type="text" name="energia" value="{{ pista.energia or '' }}"></label>
+      <label>Bailabilidad (0–1) <input type="text" name="bailabilidad" value="{{ pista.bailabilidad or '' }}"></label>
+      <label>Duración (s o m:ss) <input type="text" name="duracion_s" value="{% if pista.duracion_s %}{{ pista.duracion_s // 60 }}:{{ '%02d' | format(pista.duracion_s % 60) }}{% endif %}"></label>
+      <label>Loudness (dB) <input type="text" name="loudness_db" value="{{ pista.loudness_db or '' }}"></label>
+      <label>Valencia (0–1) <input type="text" name="valencia" value="{{ pista.valencia or '' }}"></label>
+      <label>Voz
+        <select name="voz">
+          <option value="" {% if not pista.voz %}selected{% endif %}>—</option>
+          <option value="vocal" {% if pista.voz == 'vocal' %}selected{% endif %}>Vocal</option>
+          <option value="instrumental" {% if pista.voz == 'instrumental' %}selected{% endif %}>Instrumental</option>
+          <option value="mixto" {% if pista.voz == 'mixto' %}selected{% endif %}>Mixto</option>
+        </select>
+      </label>
+      <label>Género <input type="text" name="genero" value="{{ pista.genero or '' }}"></label>
+      <label>Tonalidad <input type="text" name="tonalidad" value="{{ pista.tonalidad or '' }}"></label>
+      <label>Notas <input type="text" name="notas" value="{{ pista.notas }}"></label>
+      <button type="submit">Guardar cambios</button>
+    </form>
+  </dialog>
+  {% endfor %}
 </section>
 
 <section class="diagnostico">
