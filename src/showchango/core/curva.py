@@ -41,12 +41,20 @@ def calcular_curva(proyecto: Proyecto) -> dict:
 
 
 def datos_para_chartjs(proyecto: Proyecto) -> dict:
-    """Adapta la curva al formato más cómodo para Chart.js."""
+    """Adapta la curva al formato más cómodo para Chart.js.
+
+    Devuelve puntos `{x: tiempo_min, y: valor}` para poder usar el eje X como
+    una escala lineal de tiempo real del show.
+    """
     curva = calcular_curva(proyecto)
+    puntos = curva["puntos"]
     return {
-        "etiquetas": [p["titulo"] for p in curva["puntos"]],
-        "energia": [p["energia"] for p in curva["puntos"]],
-        "bailabilidad": [p["bailabilidad"] for p in curva["puntos"]],
-        "tiempos_min": [p["tiempo_min"] for p in curva["puntos"]],
+        "etiquetas": [p["titulo"] for p in puntos],
+        "energia": [p["energia"] for p in puntos],
+        "bailabilidad": [p["bailabilidad"] for p in puntos],
+        "tiempos_min": [p["tiempo_min"] for p in puntos],
+        "puntos_energia": [{"x": p["tiempo_min"], "y": p["energia"]} for p in puntos],
+        "puntos_bailabilidad": [{"x": p["tiempo_min"], "y": p["bailabilidad"]} for p in puntos],
+        "titulos": [p["titulo"] for p in puntos],
         **curva,
     }

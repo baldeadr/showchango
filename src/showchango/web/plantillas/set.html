@@ -26,20 +26,24 @@
 
 <section class="orden-pistas">
   <h3>Orden del set (arrastra para reordenar)</h3>
-  <ul id="lista-pistas" class="sortable-list">
-    {% for pista_id in proyecto.orden %}
-    {% set pista = proyecto.pistas | selectattr('id', 'equalto', pista_id) | first %}
-    <li data-id="{{ pista.id }}">
-      <span class="handle" aria-label="Arrastrar">☰</span>
-      <span class="num">{{ loop.index }}</span>
-      <span class="titulo">{{ pista.titulo }}</span>
-      {% if pista.artista %}<span class="artista">— {{ pista.artista }}</span>{% endif %}
-      {% if pista.bpm %}<span class="badge">{{ pista.bpm }} BPM</span>{% endif %}
-      {% if pista.energia is not none %}<span class="badge">E {{ pista.energia }}</span>{% endif %}
-      {% if pista.duracion_s %}<span class="badge">{{ pista.duracion_s // 60 }}:{{ "%02d" | format(pista.duracion_s % 60) }}</span>{% endif %}
-    </li>
-    {% endfor %}
-  </ul>
+  <div class="timeline-scroll">
+    <ul id="lista-pistas" class="sortable-list">
+      {% for pista_id in proyecto.orden %}
+      {% set pista = proyecto.pistas | selectattr('id', 'equalto', pista_id) | first %}
+      <li data-id="{{ pista.id }}">
+        <span class="handle" aria-label="Arrastrar">☰</span>
+        <span class="num">{{ loop.index }}</span>
+        <span class="titulo">{{ pista.titulo }}</span>
+        {% if pista.artista %}<span class="artista">{{ pista.artista }}</span>{% endif %}
+        <span class="badges">
+          {% if pista.bpm %}<span class="badge">{{ pista.bpm }} BPM</span>{% endif %}
+          {% if pista.energia is not none %}<span class="badge">E {{ pista.energia }}</span>{% endif %}
+          {% if pista.duracion_s %}<span class="badge">{{ pista.duracion_s // 60 }}:{{ "%02d" | format(pista.duracion_s % 60) }}</span>{% endif %}
+        </span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 </section>
 
 <section class="diagnostico">
@@ -157,10 +161,11 @@
 {% endif %}
 
 <section class="agregar-pista">
-  <h3>Agregar pista manual</h3>
-  <form method="post" action="/pista/nueva" class="grid-form">
+  <details>
+    <summary class="button">Agregar pista</summary>
+    <form method="post" action="/pista/nueva" class="grid-form">
     <label>Título <input type="text" name="titulo" required></label>
-    <label>Artista <input type="text" name="artista"></label>
+    <label>Artista <input type="text" name="artista" value="{{ proyecto.show.artista }}"></label>
     <label>BPM <input type="text" name="bpm"></label>
     <label>Energía (0–1) <input type="text" name="energia"></label>
     <label>Bailabilidad (0–1) <input type="text" name="bailabilidad"></label>
@@ -179,7 +184,8 @@
     <label>Tonalidad <input type="text" name="tonalidad"></label>
     <label>Notas <input type="text" name="notas"></label>
     <button type="submit">Agregar pista</button>
-  </form>
+    </form>
+  </details>
 </section>
 
 <section class="importar-csv">

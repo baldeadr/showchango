@@ -6,14 +6,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const ctx = canvas.getContext("2d");
   const datos = window.__CURVA_INICIAL__;
 
+  function formatearMinutos(minutos) {
+    const m = Math.floor(minutos);
+    const s = Math.floor((minutos - m) * 60)
+      .toString()
+      .padStart(2, "0");
+    return `${m}:${s}`;
+  }
+
   const chart = new Chart(ctx, {
     type: "line",
     data: {
-      labels: datos.etiquetas,
       datasets: [
         {
           label: "Energía",
-          data: datos.energia,
+          data: datos.puntos_energia,
           borderColor: "#ff6b35",
           backgroundColor: "rgba(255, 107, 53, 0.2)",
           stepped: "after",
@@ -22,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
           label: "Bailabilidad",
-          data: datos.bailabilidad,
+          data: datos.puntos_bailabilidad,
           borderColor: "#4dd0a1",
           backgroundColor: "rgba(77, 208, 161, 0.2)",
           stepped: "after",
@@ -35,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      parsing: false,
       scales: {
         y: {
           min: 0,
@@ -43,12 +51,25 @@ document.addEventListener("DOMContentLoaded", () => {
           ticks: { color: "#999" },
         },
         x: {
+          type: "linear",
+          title: { display: true, text: "Tiempo del show", color: "#999" },
           grid: { color: "#2a2a30" },
-          ticks: { color: "#999" },
+          ticks: {
+            color: "#999",
+            callback: (valor) => formatearMinutos(valor),
+          },
         },
       },
       plugins: {
         legend: { labels: { color: "#e6e6e6" } },
+        tooltip: {
+          callbacks: {
+            title: (items) => {
+              const idx = items[0].dataIndex;
+              return datos.titulos[idx];
+            },
+          },
+        },
       },
     },
   });
@@ -68,9 +89,9 @@ document.addEventListener("DOMContentLoaded", () => {
           return r.json();
         })
         .then((nuevosDatos) => {
-          chart.data.labels = nuevosDatos.etiquetas;
-          chart.data.datasets[0].data = nuevosDatos.energia;
-          chart.data.datasets[1].data = nuevosDatos.bailabilidad;
+          datos.titulos = nuevosDatos.titulos;
+          chart.data.datasets[0].data = nuevosDatos.puntos_energia;
+          chart.data.datasets[1].data = nuevosDatos.puntos_bailabilidad;
           chart.update();
         })
         .catch((err) => {

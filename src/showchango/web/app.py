@@ -330,9 +330,10 @@ def crear_app() -> FastAPI:
         request: Request,
         nombre: str = Form(""),
         artista: str = Form(""),
+        tipo: str = Form("show_en_vivo"),
     ):
         sid = _sid(request) or sesiones.nueva()
-        proyecto = nuevo_proyecto(nombre=nombre, artista=artista)
+        proyecto = nuevo_proyecto(nombre=nombre, artista=artista, tipo=tipo)
         sesiones.guardar_proyecto(sid, proyecto)
         return _respuesta_con_sesion(sid, "/set")
 

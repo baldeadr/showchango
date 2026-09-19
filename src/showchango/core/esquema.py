@@ -9,7 +9,7 @@ APP = "showchango"
 SCHEMA_VERSION = 1
 
 Fuente = Literal["manual", "csv", "analisis", "spotify"]
-TipoShow = Literal["dj", "banda"]
+TipoShow = Literal["show_en_vivo", "sesion_dj"]
 Voz = Literal["vocal", "instrumental", "mixto"]
 
 
@@ -77,8 +77,10 @@ def nuevo_id() -> str:
     return secrets.token_hex(4)
 
 
-def nuevo_proyecto(nombre: str = "", artista: str = "") -> Proyecto:
-    return Proyecto(show=Show(nombre=nombre, artista=artista))
+def nuevo_proyecto(
+    nombre: str = "", artista: str = "", tipo: TipoShow | None = None
+) -> Proyecto:
+    return Proyecto(show=Show(nombre=nombre, artista=artista, tipo=tipo))
 
 
 def a_texto(proyecto: Proyecto) -> str:

@@ -95,7 +95,8 @@ form label {
   margin-bottom: 1rem;
 }
 
-form input[type="text"] {
+form input[type="text"],
+form select {
   width: 100%;
   padding: 0.6rem;
   margin-top: 0.25rem;
@@ -174,6 +175,18 @@ section {
   padding: 1.5rem;
 }
 
+.agregar-pista details > summary {
+  list-style: none;
+}
+
+.agregar-pista details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.agregar-pista details[open] > summary {
+  margin-bottom: 1rem;
+}
+
 .grid-form {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -185,19 +198,14 @@ section {
   font-size: 0.875rem;
 }
 
-form input[type="file"],
-form select {
+form input[type="file"] {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.35rem;
   margin-top: 0.25rem;
   background: var(--tarjeta);
   border: 1px solid var(--borde);
   color: var(--texto);
   border-radius: 4px;
-}
-
-form input[type="file"] {
-  padding: 0.35rem;
 }
 
 button.small {
@@ -283,21 +291,29 @@ td.actions {
   padding: 1.5rem;
 }
 
+.timeline-scroll {
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
 .sortable-list {
+  display: flex;
+  gap: 0.75rem;
   list-style: none;
-  padding: 0;
+  padding: 0.25rem;
   margin: 0;
 }
 
 .sortable-list li {
+  flex: 0 0 160px;
+  min-height: 150px;
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  flex-direction: column;
+  gap: 0.35rem;
   padding: 0.75rem;
-  margin-bottom: 0.5rem;
   background: var(--fondo);
   border: 1px solid var(--borde);
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: grab;
 }
 
@@ -309,21 +325,30 @@ td.actions {
   cursor: grab;
   color: #666;
   user-select: none;
+  align-self: flex-end;
 }
 
 .sortable-list li .num {
   color: #666;
-  min-width: 1.5rem;
-  text-align: right;
+  font-size: 0.75rem;
 }
 
 .sortable-list li .titulo {
   font-weight: 600;
+  line-height: 1.2;
 }
 
 .sortable-list li .artista {
   color: #999;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
+}
+
+.sortable-list li .badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
 }
 
 .badge {
