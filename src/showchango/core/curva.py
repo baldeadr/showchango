@@ -45,16 +45,29 @@ def datos_para_chartjs(proyecto: Proyecto) -> dict:
 
     Devuelve puntos `{x: tiempo_min, y: valor}` para poder usar el eje X como
     una escala lineal de tiempo real del show.
+
+    Se agrega un punto final al tiempo de finalización de la última pista
+    para que la línea "stepped" represente correctamente toda la duración.
     """
     curva = calcular_curva(proyecto)
     puntos = curva["puntos"]
+    puntos_energia = [{"x": p["tiempo_min"], "y": p["energia"]} for p in puntos]
+    puntos_bailabilidad = [
+        {"x": p["tiempo_min"], "y": p["bailabilidad"]} for p in puntos
+    ]
+
+    if puntos:
+        fin = curva["duracion_total_min"]
+        puntos_energia.append({"x": fin, "y": puntos[-1]["energia"]})
+        puntos_bailabilidad.append({"x": fin, "y": puntos[-1]["bailabilidad"]})
+
     return {
         "etiquetas": [p["titulo"] for p in puntos],
         "energia": [p["energia"] for p in puntos],
         "bailabilidad": [p["bailabilidad"] for p in puntos],
         "tiempos_min": [p["tiempo_min"] for p in puntos],
-        "puntos_energia": [{"x": p["tiempo_min"], "y": p["energia"]} for p in puntos],
-        "puntos_bailabilidad": [{"x": p["tiempo_min"], "y": p["bailabilidad"]} for p in puntos],
+        "puntos_energia": puntos_energia,
+        "puntos_bailabilidad": puntos_bailabilidad,
         "titulos": [p["titulo"] for p in puntos],
         **curva,
     }

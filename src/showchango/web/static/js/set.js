@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${m}:${s}`;
   }
 
-  const maxTiempo = datos.tiempos_min.length > 0
-    ? Math.max(...datos.tiempos_min, 1)
+  const maxTiempo = datos.puntos_energia.length > 0
+    ? Math.max(...datos.puntos_energia.map((p) => p.x), 1)
     : 1;
 
   const chart = new Chart(ctx, {
@@ -101,8 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
           datos.tiempos_min = nuevosDatos.tiempos_min;
           chart.data.datasets[0].data = nuevosDatos.puntos_energia;
           chart.data.datasets[1].data = nuevosDatos.puntos_bailabilidad;
-          chart.options.scales.x.max = nuevosDatos.tiempos_min.length > 0
-            ? Math.max(...nuevosDatos.tiempos_min, 1)
+          chart.options.scales.x.max = nuevosDatos.puntos_energia.length > 0
+            ? Math.max(...nuevosDatos.puntos_energia.map((p) => p.x), 1)
             : 1;
           chart.update();
         })

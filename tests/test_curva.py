@@ -50,6 +50,14 @@ def test_datos_para_chartjs():
     assert datos["energia"] == [0.5]
     assert datos["bailabilidad"] == [0.6]
     assert datos["tiempos_min"] == [0.0]
-    assert datos["puntos_energia"] == [{"x": 0.0, "y": 0.5}]
-    assert datos["puntos_bailabilidad"] == [{"x": 0.0, "y": 0.6}]
+    assert datos["puntos_energia"][0] == {"x": 0.0, "y": 0.5}
+    assert datos["puntos_energia"][-1] == {
+        "x": datos["duracion_total_min"],
+        "y": 0.5,
+    }
+    assert datos["puntos_bailabilidad"][0] == {"x": 0.0, "y": 0.6}
+    assert datos["puntos_bailabilidad"][-1] == {
+        "x": datos["duracion_total_min"],
+        "y": 0.6,
+    }
     assert datos["titulos"] == ["A"]
