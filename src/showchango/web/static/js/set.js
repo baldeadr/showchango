@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           label: "Energía",
           data: datos.puntos_energia,
+          pointRadius: datos.radios_energia,
           borderColor: "#ff6b35",
           backgroundColor: "rgba(255, 107, 53, 0.2)",
           stepped: "after",
@@ -34,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           label: "Bailabilidad",
           data: datos.puntos_bailabilidad,
+          pointRadius: datos.radios_bailabilidad,
           borderColor: "#4dd0a1",
           backgroundColor: "rgba(77, 208, 161, 0.2)",
           stepped: "after",
@@ -74,6 +76,19 @@ document.addEventListener("DOMContentLoaded", () => {
               const idx = items[0]?.dataIndex;
               return idx !== undefined ? datos.titulos[idx] : "";
             },
+            label: (item) => {
+              const idx = item.dataIndex;
+              const duracionS = datos.duraciones_s[idx];
+              const lineas = [`${item.dataset.label}: ${item.parsed.y}`];
+              if (duracionS !== undefined) {
+                const m = Math.floor(duracionS / 60);
+                const s = Math.floor(duracionS % 60)
+                  .toString()
+                  .padStart(2, "0");
+                lineas.push(`Duración: ${m}:${s}`);
+              }
+              return lineas;
+            },
           },
         },
       },
@@ -99,8 +114,11 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((nuevosDatos) => {
           datos.titulos = nuevosDatos.titulos;
           datos.tiempos_min = nuevosDatos.tiempos_min;
+          datos.duraciones_s = nuevosDatos.duraciones_s;
           chart.data.datasets[0].data = nuevosDatos.puntos_energia;
+          chart.data.datasets[0].pointRadius = nuevosDatos.radios_energia;
           chart.data.datasets[1].data = nuevosDatos.puntos_bailabilidad;
+          chart.data.datasets[1].pointRadius = nuevosDatos.radios_bailabilidad;
           chart.options.scales.x.max = nuevosDatos.puntos_energia.length > 0
             ? Math.max(...nuevosDatos.puntos_energia.map((p) => p.x), 1)
             : 1;

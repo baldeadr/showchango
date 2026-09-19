@@ -61,6 +61,8 @@ def datos_para_chartjs(proyecto: Proyecto) -> dict:
         puntos_energia.append({"x": fin, "y": puntos[-1]["energia"]})
         puntos_bailabilidad.append({"x": fin, "y": puntos[-1]["bailabilidad"]})
 
+    radios = [4] * len(puntos) + [0]
+
     return {
         "etiquetas": [p["titulo"] for p in puntos],
         "energia": [p["energia"] for p in puntos],
@@ -68,6 +70,9 @@ def datos_para_chartjs(proyecto: Proyecto) -> dict:
         "tiempos_min": [p["tiempo_min"] for p in puntos],
         "puntos_energia": puntos_energia,
         "puntos_bailabilidad": puntos_bailabilidad,
+        "radios_energia": radios,
+        "radios_bailabilidad": radios,
+        "duraciones_s": [p["duracion_s"] for p in puntos],
         "titulos": [p["titulo"] for p in puntos],
         **curva,
     }
