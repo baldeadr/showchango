@@ -62,8 +62,10 @@ Criterio de salida: armar el setlist de Apex Ultra del 25-sep 100% en Show Chang
 - [x] Landing con explicación y privacidad.
 - [x] Deploy en free tier (stateless, sin cuentas).
 - [x] Búsqueda/metadata con Spotify (metadata básica; audio features deprecadas por Spotify).
-- [ ] Decidir modelo de acceso: gratis, freemium, pago `[PENDIENTE]`.
-- [ ] Evaluar si mantener el modelo sin almacenamiento como feature permanente `[PENDIENTE]`.
+- [x] Decidir modelo de acceso: **gratis con full access**; donaciones o monetización futura posible `[DECIDIDO]`.
+- [x] Evaluar sin almacenamiento: **se mantiene como feature permanente por ahora**; el almacenamiento podría ser una feature paga si algún día se monetiza `[DECIDIDO]`.
+- [ ] Definir licencia del proyecto `[OMITIDO POR AHORA]`.
+- [ ] Validar marca/dominio/handles `[OMITIDO POR AHORA; proyecto personal, se renombra si es necesario]`.
 
 ---
 

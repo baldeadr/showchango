@@ -96,7 +96,7 @@ Ver [`docs/FASES.md`](docs/FASES.md) para el plan completo con checkboxes.
 
 - **F0 — Cimiento (✔):** repo, docs, esquema v1, esqueleto FastAPI.
 - **F1 — MVP:** M1 importar pistas ✔; M2 curva + drag & drop ✔; M3 diagnóstico ✔; M4 export completo ✔.
-- **F2 — Producto público (en curso):** landing ✔, deploy docs ✔, Spotify metadata básica ✔; decidir modelo de acceso `[PENDIENTE]`.
+- **F2 — Producto público (en curso):** landing ✔, deploy docs ✔, Spotify metadata básica ✔; modelo de acceso decidido: gratis full access.
 - **F3 — Inteligencia:** recomendador de orden + diagnóstico explicado + LLM sobre export.
 
 ## Desarrollo
@@ -144,6 +144,12 @@ Heredado de `architecting-a-band`:
 
 Ver [`AGENTS.md`](AGENTS.md) para la guía completa de asistentes de IA.
 
+## Modelo y privacidad
+
+- **Gratis, full access.** Show Chango es un proyecto personal; todos pueden usar todas las funciones sin pagar.
+- **Sin almacenamiento por diseño.** El set vive en sesión temporal y en el JSON que exportes. Si en el futuro se monetiza, el almacenamiento en la nube podría ser una feature de pago, pero la versión gratuita seguirá sin guardar nada.
+- **Donaciones futuras `[PROPUESTA]`:** si la herramienta crece, se puede agregar un botón de donación (Ko-fi, PayPal, etc.) sin restringir funciones.
+
 ## Relación con `architecting-a-band`
 
 Show Chango nació del universo `architecting-a-band` (caso real: setlist de Apex Ultra). La ficha original queda como archivo histórico en `architecting-a-band/show-chango/README.md`; el desarrollo activo y la bitácora viven en este repo.
@@ -155,5 +161,5 @@ Show Chango nació del universo `architecting-a-band` (caso real: setlist de Ape
 - [x] F1-M2: curva + drag & drop.
 - [x] F1-M3: diagnóstico (arcos, valles/picos, bloques).
 - [x] F1-M4: export completo (CSV, Markdown, PNG/SVG, PDF).
-- [ ] Definir licencia del proyecto `[PENDIENTE]`.
-- [ ] Validar colisión de marca, dominio y handles `[PENDIENTE]`.
+- [ ] Definir licencia del proyecto `[OMITIDO POR AHORA]`.
+- [ ] Validar colisión de marca, dominio y handles `[OMITIDO POR AHORA; proyecto personal, se renombra si es necesario]`.
