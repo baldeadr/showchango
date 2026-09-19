@@ -9,7 +9,7 @@
   <meta property="og:description" content="{% block og_description %}Arma, ordena y exporta el setlist de tu show con una curva de energía clara.{% endblock %}">
   <meta property="og:type" content="website">
   <link rel="icon" href="{{ url_for('static', path='/logo.svg') }}" type="image/svg+xml">
-  <link rel="stylesheet" href="{{ url_for('static', path='/css/estilo.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/estilo.css') }}?v={{ css_version }}">
   <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshEEFC8ck/INrBWCQe7v0DnN3GN7PAIZl+oy8YRKdXvN/o4bSW8/tE" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/sortablejs@1.15.6/Sortable.min.js"></script>
   <script src="https://unpkg.com/chart.js@4.4.7/dist/chart.umd.js"></script>
