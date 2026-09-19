@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Privacidad — Show Chango{% endblock %}
+
+{% block content %}
+<section class="privacidad">
+  <h2>Privacidad</h2>
+
+  <p><strong>Show Chango no almacena tu información.</strong></p>
+
+  <h3>Audio</h3>
+  <p>
+    Cuando subes un archivo de audio, se analiza en memoria y se descarta
+    inmediatamente después. Nunca guardamos el archivo original.
+  </p>
+
+  <h3>Sets</h3>
+  <p>
+    Tu setlist vive en una sesión temporal en la memoria del servidor. Si cierras
+    el navegador o pasan varias horas sin actividad, la sesión expira. La única
+    forma de guardar un set es exportarlo como JSON desde la aplicación.
+  </p>
+
+  <h3>Cookies</h3>
+  <p>
+    Usamos una sola cookie técnica (<code>sc_sesion</code>) para mantener tu
+    sesión temporal. No rastreamos tu actividad ni compartimos datos con terceros.
+  </p>
+
+  <h3>Análisis de audio</h3>
+  <p>
+    El análisis de audio usa <a href="https://librosa.org/" target="_blank">librosa</a>
+    localmente. Solo se conserva, de forma anónima, un caché de atributos por hash
+    para no repetir análisis idénticos. Ese caché no contiene nombres de archivos,
+    títulos ni ningún dato personal.
+  </p>
+
+  <p>
+    <a href="/">← Volver al inicio</a>
+  </p>
+</section>
+{% endblock %}

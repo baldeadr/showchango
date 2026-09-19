@@ -1,0 +1,27 @@
+<div class="spotify-resultados">
+  {% if error %}
+  <p class="error">{{ error }}</p>
+  {% elif resultados %}
+  <ul>
+    {% for r in resultados %}
+    <li>
+      {% if r.imagen %}<img src="{{ r.imagen }}" alt="" width="48" height="48">{% endif %}
+      <div class="info">
+        <strong>{{ r.titulo }}</strong>
+        <span>{{ r.artista }} — {{ r.album }}</span>
+        <span class="badge">{{ (r.duracion_s // 60)|int }}:{{ "%02d" | format((r.duracion_s % 60)|int) }}</span>
+      </div>
+      <form method="post" action="/pista/nueva" class="inline">
+        <input type="hidden" name="titulo" value="{{ r.titulo }}">
+        <input type="hidden" name="artista" value="{{ r.artista }}">
+        <input type="hidden" name="duracion_s" value="{{ r.duracion_s }}">
+        <input type="hidden" name="notas" value="Spotify: {{ r.url }}">
+        <button type="submit" class="small">Agregar</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="hint">Escribe arriba y busca en Spotify.</p>
+  {% endif %}
+</div>

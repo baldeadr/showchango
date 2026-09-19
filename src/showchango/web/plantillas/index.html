@@ -1,12 +1,47 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="hero">
-  <h2>Arma el setlist de tu show</h2>
-  <p>Sube o importa tus canciones, ordénalas con drag & drop y visualiza la curva de energía.</p>
+<section class="hero landing-hero">
+  <h2>Arma el setlist de tu show con una curva de energía clara</h2>
+  <p>
+    Show Chango te ayuda a ordenar tus canciones, visualizar la energía del set
+    y exportar el resultado en JSON, CSV, Markdown, PNG, SVG o PDF.
+  </p>
+  <a class="button" href="#crear">Crear un set</a>
 </section>
 
-<section class="nuevo-set">
+<section class="features">
+  <h3>Qué puedes hacer</h3>
+  <div class="feature-grid">
+    <article>
+      <h4>Importa pistas</h4>
+      <p>Manual, CSV, Excel o audio con análisis efímero.</p>
+    </article>
+    <article>
+      <h4>Ordena con drag & drop</h4>
+      <p>Arrastra canciones y recalcula la curva en vivo.</p>
+    </article>
+    <article>
+      <h4>Diagnóstico</h4>
+      <p>Detecta picos, valles, bloques repetidos y posiciones desperdiciadas.</p>
+    </article>
+    <article>
+      <h4>Exporta todo</h4>
+      <p>JSON, CSV, Markdown, PNG, SVG y PDF para ensayo o compartir.</p>
+    </article>
+  </div>
+</section>
+
+<section class="privacidad-destacada">
+  <h3>Privacidad por diseño</h3>
+  <p>
+    No guardamos tu audio ni tus datos. El set vive solo en tu sesión temporal
+    y en el archivo JSON que exportas. Nada se persiste en nuestros servidores.
+  </p>
+  <a href="/privacidad">Lee más sobre privacidad</a>
+</section>
+
+<section class="nuevo-set" id="crear">
   <h3>Crear un set nuevo</h3>
   <form method="post" action="/set/nuevo">
     <label>

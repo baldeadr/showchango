@@ -181,6 +181,16 @@
   <div id="analisis-result"></div>
 </section>
 
+<section class="buscar-spotify">
+  <h3>Buscar en Spotify</h3>
+  <p>Importa título, artista y duración. Los atributos de energía/BPM ya no están disponibles en la API de Spotify; complétalos a mano o con análisis de audio.</p>
+  <form hx-get="/spotify/buscar" hx-target="#spotify-resultados" hx-swap="innerHTML">
+    <input type="text" name="q" placeholder="Artista - canción" required>
+    <button type="submit">Buscar</button>
+  </form>
+  <div id="spotify-resultados"></div>
+</section>
+
 <section class="importar-json">
   <h3>Importar JSON (reemplaza el set actual)</h3>
   <form method="post" action="/set/importar" enctype="multipart/form-data">

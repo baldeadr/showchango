@@ -29,6 +29,7 @@ from showchango.core.esquema import (
 )
 from showchango.db import Cache
 from showchango.render import exportar_csv, exportar_markdown, exportar_pdf, renderizar_curva
+from showchango.spotify import SpotifyClient
 from showchango.web.sesiones import Sesiones
 
 PLANTILLAS = Path(__file__).parent / "plantillas"
@@ -206,6 +207,7 @@ def crear_app() -> FastAPI:
     sesiones = Sesiones()
     cache = Cache()
     analyzer = LibrosaAnalyzer()
+    spotify = SpotifyClient()
     jobs: dict[str, dict] = {}
 
     def _sid(request: Request) -> str | None:
@@ -284,6 +286,10 @@ def crear_app() -> FastAPI:
             "index.html",
             {"proyecto": proyecto},
         )
+
+    @app.get("/privacidad", response_class=HTMLResponse)
+    def privacidad(request: Request):
+        return templates.TemplateResponse(request, "privacidad.html")
 
     @app.post("/set/nuevo")
     def crear_set(
@@ -622,6 +628,38 @@ def crear_app() -> FastAPI:
             request,
             "analisis_estado.html",
             {"job_id": job_id, "status": job["status"], "message": job.get("message", "")},
+        )
+
+    @app.get("/spotify/buscar", response_class=HTMLResponse)
+    async def buscar_spotify(request: Request, q: str = ""):
+        if not spotify.configurado():
+            return templates.TemplateResponse(
+                request,
+                "spotify_resultados.html",
+                {
+                    "resultados": [],
+                    "error": "Spotify no está configurado en este servidor.",
+                    "q": q,
+                },
+            )
+        if not q.strip():
+            return templates.TemplateResponse(
+                request,
+                "spotify_resultados.html",
+                {"resultados": [], "error": None, "q": q},
+            )
+        try:
+            resultados = await spotify.buscar(q)
+        except Exception as exc:
+            return templates.TemplateResponse(
+                request,
+                "spotify_resultados.html",
+                {"resultados": [], "error": str(exc), "q": q},
+            )
+        return templates.TemplateResponse(
+            request,
+            "spotify_resultados.html",
+            {"resultados": resultados, "error": None, "q": q},
         )
 
     return app

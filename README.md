@@ -4,7 +4,7 @@
 
 - **Nombre:** Show Chango — decisión del artista (2026-09-18).
 - **Tagline:** *El orquestador de tus setlists.*
-- **Estado:** Fase 1 — MVP completo (M1 ✔; M2 ✔; M3 ✔; M4 ✔). Próxima: F2 producto público.
+- **Estado:** Fase 1 — MVP completo (M1 ✔; M2 ✔; M3 ✔; M4 ✔). F2 en curso: landing, deploy y Spotify básico listos; faltan decisiones de modelo de acceso.
 - **Repo:** código, docs y bitácora viven aquí (`~/Projects/showchango`).
 - **Principio clave:** **nada se almacena** — ni audio ni sets. El set vive en sesión temporal; la persistencia real es el JSON que exportas.
 
@@ -96,7 +96,7 @@ Ver [`docs/FASES.md`](docs/FASES.md) para el plan completo con checkboxes.
 
 - **F0 — Cimiento (✔):** repo, docs, esquema v1, esqueleto FastAPI.
 - **F1 — MVP:** M1 importar pistas ✔; M2 curva + drag & drop ✔; M3 diagnóstico ✔; M4 export completo ✔.
-- **F2 — Producto público:** deploy, landing, Spotify metadata, decidir modelo de acceso.
+- **F2 — Producto público (en curso):** landing ✔, deploy docs ✔, Spotify metadata básica ✔; decidir modelo de acceso `[PENDIENTE]`.
 - **F3 — Inteligencia:** recomendador de orden + diagnóstico explicado + LLM sobre export.
 
 ## Desarrollo
@@ -119,10 +119,18 @@ ruff check .
 Sirve localmente:
 
 ```bash
-python -m uvicorn showchango.web.app:app --reload
+python -m uvicorn showchango.web.app:app --reload --port 8001
 ```
 
-En `http://127.0.0.1:8000`.
+En `http://127.0.0.1:8001`.
+
+### Variables de entorno opcionales
+
+- `SPOTIFY_CLIENT_ID` y `SPOTIFY_CLIENT_SECRET`: habilitan la búsqueda de metadata básica en Spotify.
+
+### Deploy
+
+Ver [`docs/DEPLOY.md`](docs/DEPLOY.md). La app es stateless y no requiere base de datos persistente.
 
 ## Método y reglas
 

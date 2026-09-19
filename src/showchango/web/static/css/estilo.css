@@ -401,3 +401,102 @@ td.actions {
 .ok {
   color: #7bd17b;
 }
+
+.landing-hero {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.landing-hero h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.landing-hero p {
+  font-size: 1.1rem;
+  color: #bbb;
+  max-width: 640px;
+  margin: 0 auto 1.5rem;
+}
+
+.features {
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.feature-grid article {
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.feature-grid h4 {
+  margin-top: 0;
+  color: var(--acento);
+}
+
+.privacidad-destacada {
+  background: #142114;
+  border: 1px solid #2a3a2a;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.privacidad-destacada h3 {
+  color: #7bd17b;
+}
+
+.privacidad {
+  max-width: 720px;
+}
+
+.buscar-spotify {
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.spotify-resultados ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.spotify-resultados li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.spotify-resultados img {
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.spotify-resultados .info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.spotify-resultados .info span {
+  color: #999;
+  font-size: 0.875rem;
+}

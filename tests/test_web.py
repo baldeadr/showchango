@@ -282,3 +282,11 @@ def test_reordenar_pistas():
     assert datos["etiquetas"] == ["B", "A"]
     assert datos["energia"] == [0.9, 0.2]
 
+
+def test_spotify_buscar_sin_configurar():
+    c = client()
+    c.post("/set/nuevo", data={"nombre": "Set", "artista": "Test"})
+    respuesta = c.get("/spotify/buscar?q=apex")
+    assert respuesta.status_code == 200
+    assert "Spotify no está configurado" in respuesta.text
+
