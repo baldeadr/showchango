@@ -28,6 +28,7 @@ from showchango.core.esquema import (
     nuevo_proyecto,
 )
 from showchango.db import Cache
+from showchango.render import exportar_csv, exportar_markdown, exportar_pdf, renderizar_curva
 from showchango.web.sesiones import Sesiones
 
 PLANTILLAS = Path(__file__).parent / "plantillas"
@@ -352,6 +353,66 @@ def crear_app() -> FastAPI:
             headers={
                 "Content-Disposition": 'attachment; filename="showchango-set.json"',
             },
+        )
+
+    @app.get("/set/exportar-csv")
+    def exportar_set_csv(request: Request):
+        sid = _sid(request)
+        resultado = _proyecto_o_redir(sid)
+        if isinstance(resultado, RedirectResponse):
+            return resultado
+        return Response(
+            content=exportar_csv(resultado),
+            media_type="text/csv; charset=utf-8",
+            headers={"Content-Disposition": 'attachment; filename="showchango-set.csv"'},
+        )
+
+    @app.get("/set/exportar-md")
+    def exportar_set_md(request: Request):
+        sid = _sid(request)
+        resultado = _proyecto_o_redir(sid)
+        if isinstance(resultado, RedirectResponse):
+            return resultado
+        return Response(
+            content=exportar_markdown(resultado),
+            media_type="text/markdown; charset=utf-8",
+            headers={"Content-Disposition": 'attachment; filename="showchango-set.md"'},
+        )
+
+    @app.get("/set/exportar-png")
+    def exportar_set_png(request: Request):
+        sid = _sid(request)
+        resultado = _proyecto_o_redir(sid)
+        if isinstance(resultado, RedirectResponse):
+            return resultado
+        return Response(
+            content=renderizar_curva(resultado, formato="png"),
+            media_type="image/png",
+            headers={"Content-Disposition": 'attachment; filename="showchango-set.png"'},
+        )
+
+    @app.get("/set/exportar-svg")
+    def exportar_set_svg(request: Request):
+        sid = _sid(request)
+        resultado = _proyecto_o_redir(sid)
+        if isinstance(resultado, RedirectResponse):
+            return resultado
+        return Response(
+            content=renderizar_curva(resultado, formato="svg"),
+            media_type="image/svg+xml",
+            headers={"Content-Disposition": 'attachment; filename="showchango-set.svg"'},
+        )
+
+    @app.get("/set/exportar-pdf")
+    def exportar_set_pdf(request: Request):
+        sid = _sid(request)
+        resultado = _proyecto_o_redir(sid)
+        if isinstance(resultado, RedirectResponse):
+            return resultado
+        return Response(
+            content=exportar_pdf(resultado),
+            media_type="application/pdf",
+            headers={"Content-Disposition": 'attachment; filename="showchango-set.pdf"'},
         )
 
     @app.post("/set/cerrar")

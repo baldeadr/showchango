@@ -49,11 +49,11 @@ Criterio de salida: armar el setlist de Apex Ultra del 25-sep 100% en Show Chang
 
 ### M4 — Export completo + round-trip
 
-- [ ] CSV de datos.
-- [ ] Markdown estructurado legible por LLM.
-- [ ] PNG/SVG de la gráfica (matplotlib).
-- [ ] PDF del show (WeasyPrint).
-- [ ] Test de oro: exportar → importar → exportar = idéntico.
+- [x] CSV de datos.
+- [x] Markdown estructurado legible por LLM.
+- [x] PNG/SVG de la gráfica (matplotlib).
+- [x] PDF del show (WeasyPrint).
+- [x] Test de oro: exportar → importar → exportar = idéntico.
 
 ---
 
