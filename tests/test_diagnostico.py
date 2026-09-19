@@ -18,7 +18,15 @@ def _proyecto_con_pistas(*pistas: Pista) -> Proyecto:
 def test_listar_plantillas():
     plantillas = listar_plantillas()
     ids = {p.id for p in plantillas}
-    assert ids == {"climax_70", "construccion_dj", "picos_rock"}
+    assert ids == {
+        "climax_70",
+        "construccion_dj",
+        "picos_rock",
+        "electronica",
+        "rock",
+        "cumbia",
+        "industrial_bailable",
+    }
 
 
 def test_detectar_pico():

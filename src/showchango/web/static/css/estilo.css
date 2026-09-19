@@ -392,6 +392,16 @@ td.actions {
   color: #ff9999;
 }
 
+.alerta strong {
+  display: block;
+  margin: 0.25rem 0;
+}
+
+.sugerencia {
+  color: #bbb;
+  font-size: 0.875rem;
+}
+
 .hint {
   color: #888;
   font-size: 0.875rem;
@@ -499,6 +509,30 @@ td.actions {
 .spotify-resultados .info span {
   color: #999;
   font-size: 0.875rem;
+}
+
+.recomendador {
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.recomendacion {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+}
+
+.recomendacion ol {
+  margin: 0.5rem 0 1rem;
+  padding-left: 1.5rem;
+}
+
+.recomendacion li {
+  margin-bottom: 0.25rem;
 }
 
 .error-404,

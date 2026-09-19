@@ -9,6 +9,7 @@ from showchango.core.esquema import Pista, Proyecto
 class Alerta(BaseModel):
     tipo: str
     mensaje: str
+    sugerencia: str = ""
     pista_ids: list[str] = []
     posicion: int | None = None
 
@@ -41,6 +42,26 @@ PLANTILLAS: dict[str, ArcoPlantilla] = {
         nombre="Picos rock",
         descripcion="Picos y valles alternados para mantener la tensión.",
     ),
+    "electronica": ArcoPlantilla(
+        id="electronica",
+        nombre="Electrónica",
+        descripcion="Construcción tipo DJ con bailabilidad sostenida y cierre alto.",
+    ),
+    "rock": ArcoPlantilla(
+        id="rock",
+        nombre="Rock",
+        descripcion="Picos y valles alternados entre canciones de distinta intensidad.",
+    ),
+    "cumbia": ArcoPlantilla(
+        id="cumbia",
+        nombre="Cumbia",
+        descripcion="Energía y bailabilidad altas y estables; evitar bajones largos.",
+    ),
+    "industrial_bailable": ArcoPlantilla(
+        id="industrial_bailable",
+        nombre="Industrial bailable",
+        descripcion="Alta energía con picos agresivos y pocos descansos.",
+    ),
 }
 
 
@@ -55,6 +76,10 @@ def _pistas_ordenadas(proyecto: Proyecto) -> list[Pista]:
 
 def _energia(pista: Pista) -> float:
     return pista.energia if pista.energia is not None else 0.0
+
+
+def _bailabilidad(pista: Pista) -> float:
+    return pista.bailabilidad if pista.bailabilidad is not None else 0.0
 
 
 def _bpm(pista: Pista) -> float | None:
@@ -73,6 +98,10 @@ def detectar_valles_picos(proyecto: Proyecto, umbral: float = 0.15) -> list[Aler
                 Alerta(
                     tipo="pico",
                     mensaje=f"Pico de energía en '{puntos[i]['titulo']}'.",
+                    sugerencia=(
+                        "Verifica que el pico sea intencional; "
+                        "si no, rodealo de pistas de transición."
+                    ),
                     pista_ids=[puntos[i]["id"]],
                     posicion=i,
                 )
@@ -82,6 +111,10 @@ def detectar_valles_picos(proyecto: Proyecto, umbral: float = 0.15) -> list[Aler
                 Alerta(
                     tipo="valle",
                     mensaje=f"Valle de energía en '{puntos[i]['titulo']}'.",
+                    sugerencia=(
+                        "Si el valle no es deliberado, sube la energía "
+                        "antes o después para mantener el impulso."
+                    ),
                     pista_ids=[puntos[i]["id"]],
                     posicion=i,
                 )
@@ -110,6 +143,10 @@ def detectar_bloques_repetidos(
                 Alerta(
                     tipo="bloque_repetido",
                     mensaje=f"Bloque de {min_len} pistas similares: {nombres}.",
+                    sugerencia=(
+                        "Intercala texturas, géneros o cambios de intensidad "
+                        "para evitar la monotonía."
+                    ),
                     pista_ids=[p.id for p in bloque],
                     posicion=i,
                 )
@@ -140,6 +177,10 @@ def detectar_posiciones_desperdiciadas(proyecto: Proyecto) -> list[Alerta]:
                 Alerta(
                     tipo="posicion_desperdiciada",
                     mensaje=f"'{pista.titulo}' es un pico de energía muy temprano.",
+                    sugerencia=(
+                        "Reserva los picos altos para la mitad o el final del set; "
+                        "al inicio usa pistas de apertura más suaves."
+                    ),
                     pista_ids=[pista.id],
                     posicion=i,
                 )
@@ -149,6 +190,10 @@ def detectar_posiciones_desperdiciadas(proyecto: Proyecto) -> list[Alerta]:
                 Alerta(
                     tipo="posicion_desperdiciada",
                     mensaje=f"'{pista.titulo}' baja la energía cerca del final.",
+                    sugerencia=(
+                        "El cierre suele necesitar energía alta; "
+                        "considera subir la intensidad en las últimas pistas."
+                    ),
                     pista_ids=[pista.id],
                     posicion=i,
                 )
@@ -158,6 +203,10 @@ def detectar_posiciones_desperdiciadas(proyecto: Proyecto) -> list[Alerta]:
                 Alerta(
                     tipo="posicion_desperdiciada",
                     mensaje=f"'{pista.titulo}' no tiene duración, no aporta a la curva.",
+                    sugerencia=(
+                        "Agrega la duración para que esta pista influya en el "
+                        "tiempo total y la curva de energía."
+                    ),
                     pista_ids=[pista.id],
                     posicion=i,
                 )
@@ -192,6 +241,10 @@ def _comparar_climax_70(proyecto: Proyecto) -> list[Alerta]:
             Alerta(
                 tipo="arco",
                 mensaje=msg,
+                sugerencia=(
+                    "Mueve la pista de mayor energía hacia el 60-80% del set "
+                    "o elige otra como clímax."
+                ),
                 pista_ids=[pista_max.id],
                 posicion=idx_max,
             )
@@ -203,6 +256,10 @@ def _comparar_climax_70(proyecto: Proyecto) -> list[Alerta]:
                 mensaje=(
                     f"El clímax del set no alcanza una energía alta "
                     f"(máximo {max_energia * 100:.0f}%)."
+                ),
+                sugerencia=(
+                    "Incluye al menos una pista con energía ≥ 0.7 "
+                    "para dar un punto alto al show."
                 ),
                 pista_ids=[pista_max.id],
             )
@@ -227,6 +284,10 @@ def _comparar_construccion_dj(proyecto: Proyecto) -> list[Alerta]:
                         f"Bajón de energía en '{ordenadas[i].titulo}' "
                         "rompe la construcción DJ."
                     ),
+                    sugerencia=(
+                        "Sube la energía de esta pista o reubícala "
+                        "para mantener la escalada del set."
+                    ),
                     pista_ids=[ordenadas[i].id],
                     posicion=i,
                 )
@@ -240,6 +301,10 @@ def _comparar_construccion_dj(proyecto: Proyecto) -> list[Alerta]:
                 mensaje=(
                     f"La última pista ('{ultima.titulo}') no cierra "
                     "en la energía más alta del set."
+                ),
+                sugerencia=(
+                    "Termina con una pista de energía similar al clímax "
+                    "para un cierre contundente."
                 ),
                 pista_ids=[ultima.id],
                 posicion=len(ordenadas) - 1,
@@ -269,6 +334,10 @@ def _comparar_picos_rock(proyecto: Proyecto) -> list[Alerta]:
                         f"{tipo_txt.capitalize()} monótona de 3 pistas ({nombres}); "
                         "'Picos rock' necesita más contraste."
                     ),
+                    sugerencia=(
+                        "Intercambia el orden de estas pistas para crear "
+                        "picos y valles alternados."
+                    ),
                     pista_ids=[ordenadas[j].id for j in range(i, i + 3)],
                     posicion=i,
                 )
@@ -279,10 +348,95 @@ def _comparar_picos_rock(proyecto: Proyecto) -> list[Alerta]:
     return alertas
 
 
+def _comparar_cumbia(proyecto: Proyecto) -> list[Alerta]:
+    ordenadas = _pistas_ordenadas(proyecto)
+    if len(ordenadas) < 3:
+        return []
+    alertas: list[Alerta] = []
+    for i, pista in enumerate(ordenadas):
+        if _bailabilidad(pista) < 0.4:
+            alertas.append(
+                Alerta(
+                    tipo="arco",
+                    mensaje=(
+                        f"'{pista.titulo}' tiene baja bailabilidad "
+                        "para una noche de cumbia."
+                    ),
+                    sugerencia=(
+                        "Busca versiones o pistas que mantengan "
+                        "el piso de baile activo."
+                    ),
+                    pista_ids=[pista.id],
+                    posicion=i,
+                )
+            )
+    for i in range(1, len(ordenadas)):
+        prev_e = _energia(ordenadas[i - 1])
+        curr_e = _energia(ordenadas[i])
+        if prev_e - curr_e > 0.25:
+            alertas.append(
+                Alerta(
+                    tipo="arco",
+                    mensaje=(
+                        f"Bajón de energía entre '{ordenadas[i - 1].titulo}' "
+                        f"y '{ordenadas[i].titulo}'."
+                    ),
+                    sugerencia=(
+                        "Evita caídas bruscas; la cumbia funciona mejor "
+                        "con energía estable."
+                    ),
+                    pista_ids=[ordenadas[i - 1].id, ordenadas[i].id],
+                    posicion=i,
+                )
+            )
+    return alertas
+
+
+def _comparar_industrial(proyecto: Proyecto) -> list[Alerta]:
+    ordenadas = _pistas_ordenadas(proyecto)
+    if len(ordenadas) < 3:
+        return []
+    alertas: list[Alerta] = []
+    for i, pista in enumerate(ordenadas):
+        if i >= len(ordenadas) // 2 and _energia(pista) < 0.5:
+            alertas.append(
+                Alerta(
+                    tipo="arco",
+                    mensaje=(
+                        f"'{pista.titulo}' baja mucho la energía "
+                        "en la segunda mitad."
+                    ),
+                    sugerencia=(
+                        "Mantén la intensidad alta; el industrial bailable "
+                        "no suele dar descansos largos."
+                    ),
+                    pista_ids=[pista.id],
+                    posicion=i,
+                )
+            )
+    picos = sum(1 for i in range(1, len(ordenadas) - 1) if _energia(ordenadas[i]) > 0.8)
+    if picos < 2:
+        alertas.append(
+            Alerta(
+                tipo="arco",
+                mensaje="Faltan picos de energía agresivos en el set.",
+                sugerencia=(
+                    "Incluye al menos dos pistas con energía muy alta "
+                    "para marcar momentos de impacto."
+                ),
+            )
+        )
+    return alertas
+
+
 _COMPARADORES = {
     "climax_70": _comparar_climax_70,
     "construccion_dj": _comparar_construccion_dj,
     "picos_rock": _comparar_picos_rock,
+    "electronica": _comparar_construccion_dj,
+    "rock": _comparar_picos_rock,
+    "cumbia": _comparar_cumbia,
+    "industrial_bailable": _comparar_industrial,
 }
 
 

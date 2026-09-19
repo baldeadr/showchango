@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from showchango.core.curva import calcular_curva
+from showchango.core.diagnostico import diagnosticar
 from showchango.core.esquema import Proyecto
 
 
@@ -57,6 +58,32 @@ def exportar_markdown(proyecto: Proyecto) -> str:
 
     lineas.extend(
         [
+            "",
+            "## Diagnóstico resumido",
+            "",
+        ]
+    )
+    diag = diagnosticar(proyecto, "climax_70")
+    if diag.alertas:
+        for alerta in diag.alertas:
+            lineas.append(f"- **{alerta.tipo}:** {alerta.mensaje}")
+            if alerta.sugerencia:
+                lineas.append(f"  - *Sugerencia:* {alerta.sugerencia}")
+    else:
+        lineas.append("No se detectaron alertas con la plantilla 'Clímax al 70%'.")
+
+    lineas.extend(
+        [
+            "",
+            "## Prompt para análisis con LLM",
+            "",
+            "Pega este Markdown en ChatGPT, Claude u otro LLM y pidele algo como:",
+            "",
+            (
+                '> Analiza este setlist. Evalúa la curva de energía, sugiere cambios de '
+                'orden, identifica posibles valles o picos incómodos y propone una '
+                'apertura y cierre más impactantes.'
+            ),
             "",
             "---",
             "",

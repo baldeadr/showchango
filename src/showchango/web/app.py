@@ -28,6 +28,7 @@ from showchango.core.esquema import (
     nuevo_id,
     nuevo_proyecto,
 )
+from showchango.core.recomendador import recomendar_orden
 from showchango.db import Cache
 from showchango.render import exportar_csv, exportar_markdown, exportar_pdf, renderizar_curva
 from showchango.spotify import SpotifyClient
@@ -257,7 +258,15 @@ def crear_app() -> FastAPI:
         error: str | None = None,
         plantilla_id: str = "climax_70",
     ):
-        plantillas_validas = {"climax_70", "construccion_dj", "picos_rock"}
+        plantillas_validas = {
+            "climax_70",
+            "construccion_dj",
+            "picos_rock",
+            "electronica",
+            "rock",
+            "cumbia",
+            "industrial_bailable",
+        }
         plantilla_id = plantilla_id if plantilla_id in plantillas_validas else "climax_70"
         diagnostico = diagnosticar(proyecto, plantilla_id) if proyecto.orden else None
         return templates.TemplateResponse(
@@ -342,6 +351,33 @@ def crear_app() -> FastAPI:
         if isinstance(resultado, RedirectResponse):
             return resultado
         return datos_para_chartjs(resultado)
+
+    @app.get("/set/recomendar", response_class=HTMLResponse)
+    def recomendar(request: Request, plantilla: str = Query("climax_70")):
+        sid = _sid(request)
+        resultado = _proyecto_o_redir(sid)
+        if isinstance(resultado, RedirectResponse):
+            return resultado
+        plantillas_validas = {
+            "climax_70",
+            "construccion_dj",
+            "picos_rock",
+            "electronica",
+            "rock",
+            "cumbia",
+            "industrial_bailable",
+        }
+        plantilla = plantilla if plantilla in plantillas_validas else "climax_70"
+        recomendacion = recomendar_orden(resultado, plantilla)
+        return templates.TemplateResponse(
+            request,
+            "recomendacion.html",
+            {
+                "recomendacion": recomendacion,
+                "plantilla_id": plantilla,
+                "plantillas": listar_plantillas(),
+            },
+        )
 
     @app.post("/set/reordenar")
     async def reordenar(request: Request, payload: OrdenPayload):

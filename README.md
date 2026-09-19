@@ -4,7 +4,7 @@
 
 - **Nombre:** Show Chango — decisión del artista (2026-09-18).
 - **Tagline:** *El orquestador de tus setlists.*
-- **Estado:** Fase 1 y F2 completas (MVP + producto público). F3 es opcional.
+- **Estado:** Fase 1, F2 y F3 completas (MVP + producto público + inteligencia básica).
 - **Repo:** código, docs y bitácora viven aquí (`~/Projects/showchango`).
 - **Principio clave:** **nada se almacena** — ni audio ni sets. El set vive en sesión temporal; la persistencia real es el JSON que exportas.
 
@@ -97,7 +97,7 @@ Ver [`docs/FASES.md`](docs/FASES.md) para el plan completo con checkboxes.
 - **F0 — Cimiento (✔):** repo, docs, esquema v1, esqueleto FastAPI.
 - **F1 — MVP:** M1 importar pistas ✔; M2 curva + drag & drop ✔; M3 diagnóstico ✔; M4 export completo ✔.
 - **F2 — Producto público (✔):** landing, deploy configs, Spotify metadata básica, modelo de acceso decidido: gratis full access.
-- **F3 — Inteligencia:** recomendador de orden + diagnóstico explicado + LLM sobre export.
+- **F3 — Inteligencia (✔):** recomendador de orden, plantillas por género, diagnóstico con sugerencias y export Markdown para LLMs.
 
 ## Desarrollo
 

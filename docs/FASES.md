@@ -71,10 +71,10 @@ Criterio de salida: armar el setlist de Apex Ultra del 25-sep 100% en Show Chang
 
 ## F3 — Inteligencia `[PROPUESTA]`
 
-- [ ] Recomendador de orden según curva objetivo + género/tipo de evento + contexto.
-- [ ] Perfiles/plantillas de arco por género (electrónica, rock, cumbia, industrial bailable, etc.).
-- [ ] Diagnóstico explicado con sugerencias y porqué.
-- [ ] Consumo del export Markdown por LLM para razonar sobre el set.
+- [x] Recomendador de orden según curva objetivo + género/tipo de evento + contexto.
+- [x] Perfiles/plantillas de arco por género (electrónica, rock, cumbia, industrial bailable, etc.).
+- [x] Diagnóstico explicado con sugerencias y porqué.
+- [x] Consumo del export Markdown por LLM para razonar sobre el set.
 
 ---
 

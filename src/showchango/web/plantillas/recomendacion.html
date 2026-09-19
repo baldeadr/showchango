@@ -1,0 +1,32 @@
+<div class="recomendacion">
+  <h4>Recomendación para {{ (plantillas | selectattr('id', 'equalto', plantilla_id) | first).nombre }}</h4>
+  <p>{{ recomendacion.explicacion }}</p>
+
+  {% if recomendacion.orden %}
+  <ol>
+    {% for titulo in recomendacion.titulos %}
+    <li>{{ titulo }}</li>
+    {% endfor %}
+  </ol>
+
+  <form method="post" action="/set/reordenar" id="form-recomendacion">
+    <input type="hidden" name="orden" value='{{ recomendacion.orden | tojson }}'>
+    <button type="submit" class="small">Aplicar recomendación</button>
+  </form>
+  {% else %}
+  <p class="hint">No hay pistas para recomendar.</p>
+  {% endif %}
+</div>
+
+<script>
+  // Envía el JSON de orden al endpoint /set/reordenar
+  document.getElementById('form-recomendacion').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var orden = JSON.parse(this.orden.value);
+    fetch('/set/reordenar', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({orden: orden})
+    }).then(function () { window.location.reload(); });
+  });
+</script>
